@@ -89,8 +89,6 @@
 </template>
 
 <script>
-const a = '';
-
 export default {
   data () {
     return {

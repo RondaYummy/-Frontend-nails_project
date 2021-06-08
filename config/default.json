@@ -1,0 +1,11 @@
+{
+  "server": {
+    "url": {
+      "port": 3000,
+      "host": "localhost"
+    }
+  },
+  "client": {
+    "url": "http://localhost:3000"
+  }
+}

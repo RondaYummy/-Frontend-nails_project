@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import config from 'config'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -33,8 +34,12 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/eslint-module'
   ],
-
+  server: {
+    host: config.get('server.url.host'),
+    port: config.get('server.url.port')
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
   ],
@@ -60,5 +65,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  env: {
+    baseUrl: config.get('client.url'),
   }
 }

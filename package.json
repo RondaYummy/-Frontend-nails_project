@@ -11,12 +11,13 @@
     "lint:fix": "eslint --fix --ext .js,.vue --ignore-path .gitignore"
   },
   "dependencies": {
+    "config": "^3.3.6",
     "core-js": "^3.9.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "nuxt": "^2.15.3",
-    "vuetify": "^2.5.3",
-    "config": "^3.3.6"
+    "vuelidate": "^0.7.6",
+    "vuetify": "^2.5.3"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.3",

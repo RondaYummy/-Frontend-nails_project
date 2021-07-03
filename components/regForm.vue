@@ -83,15 +83,72 @@
     </div>
 
     <v-checkbox
-      v-model="checkbox"
+      v-model="agreement"
+      :rules="[rules.required]"
+      color="deep-purple"
       :error-messages="checkboxErrors"
-      label="Do you agree?"
       required
       @change="$v.checkbox.$touch()"
       @blur="$v.checkbox.$touch()"
-    ></v-checkbox>
+    >
+      <template v-slot:label>
+        I agree to the&nbsp;
+        <a href="#" @click.stop.prevent="dialog = true">Terms of Service</a>
+        &nbsp;and&nbsp;
+        <a href="#" @click.stop.prevent="privacyPolicy = true">Privacy Policy</a>*
+      </template>
+    </v-checkbox>
 
     <v-btn class="mr-4" @click="submit"> submit </v-btn>
+
+
+    <v-dialog v-model="privacyPolicy" absolute max-width="400" persistent>
+      <v-card>
+        <v-card-title class="text-h5 grey lighten-3"> Privacy Policy </v-card-title>
+        <v-card-text>
+          2Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn text @click="(agreement = false), (privacyPolicy = false)">
+            No
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            class="white--text"
+            color="deep-purple accent-4"
+            @click="(agreement = true), (privacyPolicy = false)"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialog" absolute max-width="400" persistent>
+      <v-card>
+        <v-card-title class="text-h5 grey lighten-3"> Terms of Service </v-card-title>
+        <v-card-text>
+          1Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn text @click="(agreement = false), (dialog = false)">
+            No
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            class="white--text"
+            color="deep-purple accent-4"
+            @click="(agreement = true), (dialog = false)"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </form>
 </template>
 <script>
@@ -108,7 +165,7 @@ export default {
     phone: { required, maxLength: maxLength(10), minLength: minLength(10) },
     select: { required },
     date: { required },
-    checkbox: {
+    agreement: {
       checked(val) {
         return val;
       },
@@ -116,13 +173,20 @@ export default {
   },
 
   data: () => ({
+    agreement: false,
+    dialog: false,
+    rules: {
+      length: (len) => (v) =>
+        (v || "").length >= len || `Invalid character length, required ${len}`,
+      required: (v) => !!v || "This field is required",
+    },
+    privacyPolicy: false,
     firstName: "",
     lastName: "",
     middleName: "",
     phone: "",
     select: null,
     items: ["Male", "Female"],
-    checkbox: false,
     activePicker: null,
     date: null,
     menu: false,
@@ -135,8 +199,8 @@ export default {
   computed: {
     checkboxErrors() {
       const errors = [];
-      if (!this.$v.checkbox.$dirty) return errors;
-      !this.$v.checkbox.checked && errors.push("You must agree to continue!");
+      if (!this.$v.agreement.$dirty) return errors;
+      !this.$v.agreement.checked && errors.push("You must agree to continue!");
       return errors;
     },
     selectErrors() {

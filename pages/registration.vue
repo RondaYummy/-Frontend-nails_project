@@ -46,6 +46,7 @@
             @input="$v.confirmPassword.$touch()"
             @blur="$v.confirmPassword.$touch()"
           ></v-text-field>
+          <!-- <div class="error" v-if="!$v.confirmPassword.sameAsPassword">Passwords must be identical.</div> -->
           <span class="text-caption grey--text text--darken-1">
             Please enter a password for your account
           </span>
@@ -82,50 +83,13 @@
 
       <v-btn
         :disabled="step === 3"
-        v-if="step !== 3"
+        v-if="step !== 2"
         color="primary"
         depressed
-        @click="step++"
+        @click="confirmEmailAndPass"
       >
         Next
       </v-btn>
-      <template v-if="step === 3">
-        <v-row justify="center">
-          <v-btn color="primary" dark @click.stop="dialog = true">
-            Create Account?
-          </v-btn>
-
-          <v-dialog v-model="dialog" max-width="290">
-            <v-card>
-              <v-card-title class="text-h5">
-                Are you confirming registration?
-              </v-card-title>
-
-              <v-card-text>
-                Do you accept the terms of the privacy policy and agree to
-                register on our resource?
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-
-                <v-btn color="red darken-1" text @click="dialog = false">
-                  Disagree
-                </v-btn>
-
-                <v-btn
-                  color="green darken-1"
-                  text
-                  @click="dialog = false"
-                  v-model="agreeCreatedAccount"
-                >
-                  Agree
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-row>
-      </template>
     </v-card-actions>
   </v-card>
 </template>
@@ -137,6 +101,7 @@ import {
   maxLength,
   email,
   minLength,
+  sameAs,
 } from "vuelidate/lib/validators";
 import regForm from "../components/regForm.vue";
 export default {
@@ -149,6 +114,7 @@ export default {
       required,
       maxLength: maxLength(26),
       minLength: minLength(8),
+      sameAsPassword: sameAs("password"),
     },
   },
   data: () => ({
@@ -159,7 +125,23 @@ export default {
     dialog: false,
     agreeCreatedAccount: false,
   }),
-
+  methods: {
+    submit() {
+      this.$v.$touch();
+      console.log(this.$v.$touch());
+    },
+    confirmEmailAndPass() {
+      console.log("submit!");
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
+      } else {
+        // do your submit logic here
+        this.submitStatus = "PENDING";
+        return this.step++;
+      }
+    },
+  },
   computed: {
     currentTitle() {
       switch (this.step) {
@@ -182,20 +164,26 @@ export default {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
       !this.$v.password.maxLength &&
-        errors.push("Name must be at most 26 characters long");
+        errors.push("Password must be at most 26 characters long");
       !this.$v.password.minLength &&
-        errors.push("The name must be at least 8 characters long");
-      !this.$v.password.required && errors.push("Name is required.");
+        errors.push("The password must be at least 8 characters long");
+      !this.$v.password.required && errors.push("Password is required.");
       return errors;
     },
     confirmPasswordErrors() {
       const errors = [];
       if (!this.$v.confirmPassword.$dirty) return errors;
       !this.$v.confirmPassword.maxLength &&
-        errors.push("Name must be at most 26 characters long");
+        errors.push("confirmPasswordErrors must be at most 26 characters long");
       !this.$v.confirmPassword.minLength &&
-        errors.push("The name must be at least 8 characters long");
-      !this.$v.confirmPassword.required && errors.push("Name is required.");
+        errors.push(
+          "The confirmPasswordErrors must be at least 8 characters long"
+        );
+      !this.$v.confirmPassword.required &&
+        errors.push("confirmPasswordErrors is required.");
+      if (!this.$v.confirmPassword.sameAsPassword) {
+        errors.push("Passwords must be identical.");
+      }
       return errors;
     },
   },

@@ -10,24 +10,10 @@
         </v-card-title>
         <v-card-text>
           <p>
-            Vuetify is a progressive Material Design component framework for Vue.js.
-            It was designed to empower developers to create amazing applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            Thank you for developing with Vuetify
-            and I look forward to bringing more exciting features in the future.
+           «Ніколи не забувайте про манікюр.Руки — перше, що кидається в очі після вашого лиця»
           </p>
           <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
+            <em><small>&mdash; Julia Restoin Roitfeld</small></em>
           </div>
           <hr class="my-3">
           <a

@@ -13,15 +13,39 @@
     <v-window v-model="step">
       <v-window-item :value="1">
         <v-card-text>
-          <v-text-field label="name@email.com" value=""></v-text-field>
+          <v-text-field
+            v-model="email"
+            :error-messages="emailErrors"
+            label="E-mail"
+            required
+            @input="$v.email.$touch()"
+            @blur="$v.email.$touch()"
+          ></v-text-field>
           <span class="text-caption grey--text text--darken-1">
             This is the email you will use to login to your Nikki - Nails
             account
           </span>
         </v-card-text>
         <v-card-text>
-          <v-text-field label="Password" type="password"></v-text-field>
-          <v-text-field label="Confirm Password" type="password"></v-text-field>
+          <v-text-field
+            label="Password"
+            type="password"
+            :counter="26"
+            required
+            v-model="password"
+            :error-messages="passwordErrors"
+            @input="$v.password.$touch()"
+            @blur="$v.password.$touch()"
+          ></v-text-field>
+          <v-text-field
+            label="Confirm Password"
+            type="password"
+            required
+            v-model="confirmPassword"
+            :error-messages="confirmPasswordErrors"
+            @input="$v.confirmPassword.$touch()"
+            @blur="$v.confirmPassword.$touch()"
+          ></v-text-field>
           <span class="text-caption grey--text text--darken-1">
             Please enter a password for your account
           </span>
@@ -30,66 +54,7 @@
 
       <v-window-item :value="2">
         <div class="personal-info-block">
-          <form>
-            <v-text-field
-              v-model="fname"
-              :error-messages="nameErrors"
-              :counter="10"
-              label="First Name"
-              required
-              @input="$v.fname.$touch()"
-              @blur="$v.fname.$touch()"
-            ></v-text-field>
-
-            <v-text-field
-              v-model="lname"
-              :error-messages="nameErrors"
-              :counter="10"
-              label="Last Name"
-              required
-              @input="$v.lname.$touch()"
-              @blur="$v.lname.$touch()"
-            ></v-text-field>
-
-            <v-text-field
-              v-model="mname"
-              :error-messages="nameErrors"
-              :counter="10"
-              label="Middle Name"
-              @input="$v.mname.$touch()"
-              @blur="$v.mname.$touch()"
-            ></v-text-field>
-
-            <v-text-field
-              v-model="phoneNumber"
-              :error-messages="phoneNumberErrors"
-              :counter="10"
-              label="Phone Numbere"
-              @input="$v.phoneNumber.$touch()"
-              @blur="$v.phoneNumber.$touch()"
-            ></v-text-field>
-
-            <v-select
-              v-model="select"
-              :items="items"
-              :error-messages="selectErrors"
-              label="Gender"
-              required
-              @change="$v.select.$touch()"
-              @blur="$v.select.$touch()"
-            ></v-select>
-          </form>
-
-          <div class="birthday-item">
-            <h4>Write you birthday!</h4>
-            <v-row align="center">
-              <v-date-picker
-                v-model="date"
-                full-width
-                class="mt-4"
-              ></v-date-picker>
-            </v-row>
-          </div>
+          <regForm />
         </div>
       </v-window-item>
 
@@ -106,16 +71,6 @@
           </h3>
           <span class="text-caption grey--text">Thanks for signing up!</span>
         </div>
-        <v-checkbox
-          v-model="checkbox"
-          :error-messages="checkboxErrors"
-          label="Do you agree?"
-          required
-          @change="$v.checkbox.$touch()"
-          @blur="$v.checkbox.$touch()"
-        ></v-checkbox>
-
-        <v-btn class="mr-4" @click="submit"> submit </v-btn>
       </v-window-item>
     </v-window>
 
@@ -124,42 +79,85 @@
     <v-card-actions>
       <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
       <v-spacer></v-spacer>
-      <v-btn :disabled="step === 3" color="primary" depressed @click="step++">
+
+      <v-btn
+        :disabled="step === 3"
+        v-if="step !== 3"
+        color="primary"
+        depressed
+        @click="step++"
+      >
         Next
       </v-btn>
+      <template v-if="step === 3">
+        <v-row justify="center">
+          <v-btn color="primary" dark @click.stop="dialog = true">
+            Create Account?
+          </v-btn>
+
+          <v-dialog v-model="dialog" max-width="290">
+            <v-card>
+              <v-card-title class="text-h5">
+                Are you confirming registration?
+              </v-card-title>
+
+              <v-card-text>
+                Do you accept the terms of the privacy policy and agree to
+                register on our resource?
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn color="red darken-1" text @click="dialog = false">
+                  Disagree
+                </v-btn>
+
+                <v-btn
+                  color="green darken-1"
+                  text
+                  @click="dialog = false"
+                  v-model="agreeCreatedAccount"
+                >
+                  Agree
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </template>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required, maxLength, email } from "vuelidate/lib/validators";
-
+import {
+  required,
+  maxLength,
+  email,
+  minLength,
+} from "vuelidate/lib/validators";
+import regForm from "../components/regForm.vue";
 export default {
   mixins: [validationMixin],
 
   validations: {
-    name: { required, maxLength: maxLength(10) },
-    select: { required },
-    checkbox: {
-      checked(val) {
-        return val;
-      },
+    email: { required, email },
+    password: { required, maxLength: maxLength(26), minLength: minLength(8) },
+    confirmPassword: {
+      required,
+      maxLength: maxLength(26),
+      minLength: minLength(8),
     },
   },
   data: () => ({
     step: 1,
-    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      .toISOString()
-      .substr(0, 10),
-    fname: "",
-    lname: "",
-    mname: "",
     email: "",
-    phoneNumber: "",
-    select: null,
-    items: ["Male", "Female"],
-    checkbox: false,
+    password: "",
+    confirmPassword: "",
+    dialog: false,
+    agreeCreatedAccount: false,
   }),
 
   computed: {
@@ -173,26 +171,6 @@ export default {
           return "Account created";
       }
     },
-    checkboxErrors() {
-      const errors = [];
-      if (!this.$v.checkbox.$dirty) return errors;
-      !this.$v.checkbox.checked && errors.push("You must agree to continue!");
-      return errors;
-    },
-    selectErrors() {
-      const errors = [];
-      if (!this.$v.select.$dirty) return errors;
-      !this.$v.select.required && errors.push("Item is required");
-      return errors;
-    },
-    nameErrors() {
-      const errors = [];
-      if (!this.$v.fname.$dirty) return errors;
-      !this.$v.fname.maxLength &&
-        errors.push("Name must be at most 10 characters long");
-      !this.$v.fname.required && errors.push("Name is required.");
-      return errors;
-    },
     emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
@@ -200,19 +178,25 @@ export default {
       !this.$v.email.required && errors.push("E-mail is required");
       return errors;
     },
-  },
-  methods: {
-    submit() {
-      this.$v.$touch();
+    passwordErrors() {
+      const errors = [];
+      if (!this.$v.password.$dirty) return errors;
+      !this.$v.password.maxLength &&
+        errors.push("Name must be at most 26 characters long");
+      !this.$v.password.minLength &&
+        errors.push("The name must be at least 8 characters long");
+      !this.$v.password.required && errors.push("Name is required.");
+      return errors;
     },
-    clear() {
-      this.$v.$reset();
-      this.fname = "";
-      this.lname = "";
-      this.mname = "";
-      this.phoneNumber = "";
-      this.select = null;
-      this.checkbox = false;
+    confirmPasswordErrors() {
+      const errors = [];
+      if (!this.$v.confirmPassword.$dirty) return errors;
+      !this.$v.confirmPassword.maxLength &&
+        errors.push("Name must be at most 26 characters long");
+      !this.$v.confirmPassword.minLength &&
+        errors.push("The name must be at least 8 characters long");
+      !this.$v.confirmPassword.required && errors.push("Name is required.");
+      return errors;
     },
   },
 };

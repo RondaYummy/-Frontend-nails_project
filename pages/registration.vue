@@ -185,7 +185,7 @@ export default {
         errors.push("Passwords must be identical.");
       }
       return errors;
-    },
+    }, 
   },
 };
 </script>

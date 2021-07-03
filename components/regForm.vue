@@ -95,16 +95,18 @@
         I agree to the&nbsp;
         <a href="#" @click.stop.prevent="dialog = true">Terms of Service</a>
         &nbsp;and&nbsp;
-        <a href="#" @click.stop.prevent="privacyPolicy = true">Privacy Policy</a>*
+        <a href="#" @click.stop.prevent="privacyPolicy = true">Privacy Policy</a
+        >*
       </template>
     </v-checkbox>
 
     <v-btn class="mr-4" @click="submit"> submit </v-btn>
 
-
     <v-dialog v-model="privacyPolicy" absolute max-width="400" persistent>
       <v-card>
-        <v-card-title class="text-h5 grey lighten-3"> Privacy Policy </v-card-title>
+        <v-card-title class="text-h5 grey lighten-3">
+          Privacy Policy
+        </v-card-title>
         <v-card-text>
           2Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -128,7 +130,9 @@
 
     <v-dialog v-model="dialog" absolute max-width="400" persistent>
       <v-card>
-        <v-card-title class="text-h5 grey lighten-3"> Terms of Service </v-card-title>
+        <v-card-title class="text-h5 grey lighten-3">
+          Terms of Service
+        </v-card-title>
         <v-card-text>
           1Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad

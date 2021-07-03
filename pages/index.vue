@@ -1,36 +1,75 @@
 <template>
-   <main>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <section class="main-section">
-        <h1>Nikki Nails</h1>
-        <form>
-          <button type="button"><a href="#">Показати на карті</a></button>
-          <button type="button"><a href="#">Записатись</a></button>
-        </form>
-      </section>
-
-      <p>
-        «Ніколи не забувайте про манікюр.Руки — перше, що кидається в очі після
-        вашого лиця»
-      </p>
-      <div class="text-xs-right">
-        <em><small>&mdash; Julia Restoin Roitfeld</small></em>
-      </div>
-      <hr class="my-3" />
-    </v-col>
-  </v-row>
-
-     </main>
+  <main>
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="8" md="6">
+        <section class="main-section">
+          <h1>Nikki Nails</h1>
+          
+          <form>
+            <v-btn
+              color="accent"
+              elevation="3"
+              outlined
+              plain
+              raised
+              rounded
+              text
+              x-large
+              ><a href="#">Показати на карті</a></v-btn
+            >
+            <v-btn
+              color="accent"
+              elevation="3"
+              outlined
+              plain
+              raised
+              rounded
+              text
+              x-large
+              ><a href="#">Записатись</a></v-btn
+            >
+          </form>
+        </section>
+        <p>
+          «Ніколи не забувайте про манікюр.Руки — перше, що кидається в очі
+          після вашого лиця»
+        </p>
+        <div class="text-xs-right">
+          <em><small>&mdash; Julia Restoin Roitfeld</small></em>
+        </div>
+        <hr class="my-3" />
+        <section class="main_services">
+          <main_services />
+          <main_services />
+          <main_services />
+        </section>
+      </v-col>
+    </v-row>
+  </main>
 </template>
 
 <script>
+import main_services from "../components/main_services.vue";
 export default {
-  components: {},
+  components: {
+    main_services,
+  },
+  data: () => ({}),
 };
 </script>
 
 <style lang="scss" scoped>
+.main_services{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+}
+main {
+  background-image: url("../assets/appearance.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 .main-section {
   display: flex;
   flex-flow: column;
@@ -85,12 +124,5 @@ export default {
       background-color: #2ca354;
     }
   }
-}
-</style>
-<style lang="scss" scoped>
-   main {
-  background-image: url("../assets/appearance.jpg");
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 </style>

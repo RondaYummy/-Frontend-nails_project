@@ -83,6 +83,7 @@ export default {
         path: '/registration',
         component: resolve(__dirname, 'components/registration.vue')
       })
-    }
+    },
+
   }
 }

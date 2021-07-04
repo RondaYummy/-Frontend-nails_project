@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="6">
         <section class="main-section">
           <h1>Nikki Nails</h1>
-          
+
           <form>
             <v-btn
               color="accent"
@@ -50,6 +50,7 @@
 
 <script>
 import main_services from "../components/main_services.vue";
+
 export default {
   components: {
     main_services,
@@ -59,23 +60,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main_services{
+.main_services {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
 }
 main {
   background-image: url("../assets/appearance.jpg");
   background-size: contain;
   background-repeat: no-repeat;
+  position: relative;
+}
+main::after {
+  content: "";
+  top: 690px;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  display: block;
+  background: url("../assets/bg_footer.png") bottom center repeat-x;
+  background-size: contain;
+  position: absolute;
+  z-index: 2;
 }
 .main-section {
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  height: 700px;
+  height: 800px;
 
   h1 {
     color: #454546;

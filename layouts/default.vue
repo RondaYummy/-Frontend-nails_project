@@ -1,26 +1,21 @@
 <template>
   <v-app light>
-    <v-navigation-drawer v-model="drawer" :clipped="clipped" fixed app>
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <a href="/" class="tittle"><v-toolbar-title v-text="title" /></a>
+      <v-row justify="flex-start">
+        <authComponent />
+        <a href="/registration">
+          <v-chip class="ma-2" color="primary" outlined pill>
+            Registration
+            <v-icon right> mdi-account-outline </v-icon>
+          </v-chip></a
+        >
+
+        <v-chip class="ma-2" color="indigo darken-3" outlined>
+          <v-icon left> mdi-fire </v-icon>
+          Тут буде якась хуйня
+        </v-chip>
+      </v-row>
       <v-spacer />
     </v-app-bar>
     <v-main>
@@ -36,27 +31,29 @@
 </template>
 
 <script>
+import authComponent from "../components/authorization.vue";
+
 export default {
+  components: {
+    authComponent,
+  },
   data() {
     return {
-      clipped: true,
-      drawer: true,
-      fixed: false,
-      right: false,
-      items: [
-        {
-          icon: "mdi-apps",
-          title: "Welcome",
-          to: "/",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Registration",
-          to: "/registration",
-        },
-      ],
       title: "Nikki - Nails",
     };
   },
 };
 </script>
+<style lang="scss" scoped>
+* {
+  text-decoration: none;
+}
+.tittle {
+  margin-right: 2rem;
+}
+.listItem {
+  width: 50px;
+  height: 10px;
+  display: flex;
+}
+</style>

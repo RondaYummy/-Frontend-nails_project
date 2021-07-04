@@ -46,7 +46,6 @@
             @input="$v.confirmPassword.$touch()"
             @blur="$v.confirmPassword.$touch()"
           ></v-text-field>
-          <!-- <div class="error" v-if="!$v.confirmPassword.sameAsPassword">Passwords must be identical.</div> -->
           <span class="text-caption grey--text text--darken-1">
             Please enter a password for your account
           </span>
@@ -55,7 +54,7 @@
 
       <v-window-item :value="2">
         <div class="personal-info-block">
-          <regForm />
+          <regForm @personalInfo="onPersonalInfo" />
         </div>
       </v-window-item>
 
@@ -103,7 +102,7 @@ import {
   minLength,
   sameAs,
 } from "vuelidate/lib/validators";
-import regForm from "../components/regForm.vue";
+import regForm from "./regForm.vue";
 export default {
   mixins: [validationMixin],
 
@@ -125,6 +124,7 @@ export default {
     dialog: false,
     agreeCreatedAccount: false,
   }),
+
   methods: {
     submit() {
       this.$v.$touch();
@@ -140,6 +140,9 @@ export default {
         this.submitStatus = "PENDING";
         return this.step++;
       }
+    },
+    onPersonalInfo(data) {
+      console.log("child component said login", data);
     },
   },
   computed: {
@@ -185,7 +188,7 @@ export default {
         errors.push("Passwords must be identical.");
       }
       return errors;
-    }, 
+    },
   },
 };
 </script>

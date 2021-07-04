@@ -19,15 +19,6 @@
       @input="$v.lastName.$touch()"
       @blur="$v.lastName.$touch()"
     ></v-text-field>
-
-    <v-text-field
-      v-model="middleName"
-      :error-messages="middleNameErrors"
-      :counter="10"
-      label="Middle Name"
-      @input="$v.middleName.$touch()"
-      @blur="$v.middleName.$touch()"
-    ></v-text-field>
     <v-text-field
       v-model="phone"
       :error-messages="phoneErrors"
@@ -37,13 +28,13 @@
       @blur="$v.phone.$touch()"
     ></v-text-field>
     <v-select
-      v-model="select"
+      v-model="gender"
       :items="items"
       :error-messages="selectErrors"
       label="Gender"
       required
-      @change="$v.select.$touch()"
-      @blur="$v.select.$touch()"
+      @change="$v.gender.$touch()"
+      @blur="$v.gender.$touch()"
     ></v-select>
     <div>
       <v-menu
@@ -83,13 +74,12 @@
     </div>
 
     <v-checkbox
-      v-model="agreement"
-      :rules="[rules.required]"
+      v-model="TermsOfServiceAndPrivacyPolicy"
       color="deep-purple"
       :error-messages="checkboxErrors"
       required
-      @change="$v.checkbox.$touch()"
-      @blur="$v.checkbox.$touch()"
+      @change="$v.TermsOfServiceAndPrivacyPolicy.$touch()"
+      @blur="$v.TermsOfServiceAndPrivacyPolicy.$touch()"
     >
       <template v-slot:label>
         I agree to the&nbsp;
@@ -100,7 +90,9 @@
       </template>
     </v-checkbox>
 
-    <v-btn class="mr-4" @click="submit"> submit </v-btn>
+    <v-btn class="mr-4 createAccountButton" color="primary" @click="submit">
+      Create Account?
+    </v-btn>
 
     <v-dialog v-model="privacyPolicy" absolute max-width="400" persistent>
       <v-card>
@@ -139,14 +131,17 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn text @click="(agreement = false), (dialog = false)">
+          <v-btn
+            text
+            @click="(TermsOfServiceAndPrivacyPolicy = false), (dialog = false)"
+          >
             No
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn
             class="white--text"
             color="deep-purple accent-4"
-            @click="(agreement = true), (dialog = false)"
+            @click="(TermsOfServiceAndPrivacyPolicy = true), (dialog = false)"
           >
             Yes
           </v-btn>
@@ -167,9 +162,9 @@ export default {
     lastName: { required, maxLength: maxLength(16), minLength: minLength(3) },
     middleName: { maxLength: maxLength(10), minLength: minLength(3) },
     phone: { required, maxLength: maxLength(10), minLength: minLength(10) },
-    select: { required },
+    gender: { required },
     date: { required },
-    agreement: {
+    TermsOfServiceAndPrivacyPolicy: {
       checked(val) {
         return val;
       },
@@ -177,19 +172,13 @@ export default {
   },
 
   data: () => ({
-    agreement: false,
+    TermsOfServiceAndPrivacyPolicy: false,
     dialog: false,
-    rules: {
-      length: (len) => (v) =>
-        (v || "").length >= len || `Invalid character length, required ${len}`,
-      required: (v) => !!v || "This field is required",
-    },
     privacyPolicy: false,
     firstName: "",
     lastName: "",
-    middleName: "",
     phone: "",
-    select: null,
+    gender: null,
     items: ["Male", "Female"],
     activePicker: null,
     date: null,
@@ -203,14 +192,15 @@ export default {
   computed: {
     checkboxErrors() {
       const errors = [];
-      if (!this.$v.agreement.$dirty) return errors;
-      !this.$v.agreement.checked && errors.push("You must agree to continue!");
+      if (!this.$v.TermsOfServiceAndPrivacyPolicy.$dirty) return errors;
+      !this.$v.TermsOfServiceAndPrivacyPolicy.checked &&
+        errors.push("You must agree to continue!");
       return errors;
     },
     selectErrors() {
       const errors = [];
-      if (!this.$v.select.$dirty) return errors;
-      !this.$v.select.required && errors.push("Gender is required");
+      if (!this.$v.gender.$dirty) return errors;
+      !this.$v.gender.required && errors.push("Gender is required");
       return errors;
     },
     dateErrors() {
@@ -239,15 +229,6 @@ export default {
       !this.$v.lastName.required && errors.push("Last name is required.");
       return errors;
     },
-    middleNameErrors() {
-      const errors = [];
-      if (!this.$v.middleName.$dirty) return errors;
-      !this.$v.middleName.maxLength &&
-        errors.push("Middle name must be at most 10 characters long");
-      !this.$v.middleName.minLength &&
-        errors.push("The Middle name must be at least 3 characters long");
-      return errors;
-    },
     phoneErrors() {
       const errors = [];
       if (!this.$v.phone.$dirty) return errors;
@@ -263,17 +244,28 @@ export default {
   methods: {
     submit() {
       this.$v.$touch();
+      this.step++;
+      if (!this.$v.$invalid) {
+        this.$emit("personalInfo", {
+          date: this.date,
+          gender: this.gender,
+          phone: this.phone,
+          lastName: this.lastName,
+          firstName: this.firstName,
+          TermsOfServiceAndPrivacyPolicy: this.TermsOfServiceAndPrivacyPolicy,
+        });
+      }
     },
     save(date) {
+      // method for date input
       this.$refs.menu.save(date);
-    },
-    clear() {
-      this.$v.$reset();
-      this.name = "";
-      this.email = "";
-      this.select = null;
-      this.checkbox = false;
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.createAccountButton {
+  margin: 15px 0 0 30%;
+}
+</style>

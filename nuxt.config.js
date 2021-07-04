@@ -69,5 +69,14 @@ export default {
 
   env: {
     baseUrl: config.get('client.url'),
-  }
+  },
+    router: {
+      extendRoutes(routes, resolve) {
+        routes.push({
+          name: '/registration',
+          path: '/registration',
+          component: resolve(__dirname, 'components/registration.vue')
+        })
+      }
+    }
 }

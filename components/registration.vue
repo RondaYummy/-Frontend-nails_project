@@ -265,37 +265,48 @@
             src="https://cdn.vuetifyjs.com/images/logos/v.svg"
           ></v-img>
           <h3 class="text-h6 font-weight-light mb-2">
-            Welcome to Nikki - Nails
+            Перевірте свої реєстраційні дані:
           </h3>
-
-            <h1>{{ firstName }} {{ lastName }}</h1>
-            <h1>{{ email }}</h1>
-            <h1>{{ phone }}</h1>
-            <h1>{{ gender }}</h1>
-            <h1>{{ date }}</h1>
-            <h1>{{ TermsOfServiceAndPrivacyPolicy }}</h1>
+          <span class="text-h6 font-weight-light mb-2">
+            <h3>Ім'я та прізвище:</h3>
+            {{ firstName }} {{ lastName }}
+          </span>
+          <span class="text-h6 font-weight-light mb-2"
+            ><h3>E-mail:</h3>
+            {{ email }}</span
+          >
+          <span class="text-h6 font-weight-light mb-2">
+            <h3>Номер телефону:</h3>
+            {{ phone }}
+          </span>
+          <span class="text-h6 font-weight-light mb-2"
+            >Стать: {{ gender }}</span
+          >
+          <span class="text-h6 font-weight-light mb-2">
+            <h3>День народження:</h3>
+            {{ date }}
+          </span>
+          <span class="text-h6 font-weight-light mb-2">
+            <h4>
+              Підтверджую політику конфіденційності та умови надання послуг
+              даного ресурсу:
+            </h4>
+            <h1 v-if="TermsOfServiceAndPrivacyPolicy">Підтвердужю</h1>
+            <h1 v-if="!TermsOfServiceAndPrivacyPolicy">Ні</h1>
+          </span>
 
           <span class="text-caption grey--text">Thanks for signing up!</span>
-          <v-btn
-            class="mr-4 createAccountButton"
-            color="primary"
-            @click="submit"
-          >
-            Create Account?
-          </v-btn>
         </div>
         <v-card-actions>
           <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
           <v-spacer></v-spacer>
 
           <v-btn
-            :disabled="step === 3"
-            v-if="step !== 3"
+
             color="primary"
-            depressed
-            @click="confirmEmailAndPass"
+            @click="submit"
           >
-            Next
+            Create Account?
           </v-btn>
         </v-card-actions>
       </v-window-item>
@@ -314,7 +325,7 @@ import {
   minLength,
   sameAs,
 } from "vuelidate/lib/validators";
-import regForm from "./regForm.vue";
+import api from "../plugins/api";
 
 export default {
   mixins: [validationMixin],
@@ -328,9 +339,8 @@ export default {
       minLength: minLength(8),
       sameAsPassword: sameAs("password"),
     },
-    firstName: { required, maxLength: maxLength(10), minLength: minLength(3) },
+    firstName: { required, maxLength: maxLength(16), minLength: minLength(3) },
     lastName: { required, maxLength: maxLength(16), minLength: minLength(3) },
-    middleName: { maxLength: maxLength(10), minLength: minLength(3) },
     phone: { required, maxLength: maxLength(10), minLength: minLength(10) },
     gender: { required },
     date: { required },
@@ -373,13 +383,38 @@ export default {
     },
     submit() {
       this.$v.$touch();
-      console.log(this.$v.$touch());
+      if (
+        this.$v.firstName.$invalid ||
+        this.$v.lastName.$invalid ||
+        this.$v.date.$invalid ||
+        this.$v.gender.$invalid ||
+        this.$v.phone.$invalid ||
+        this.$v.TermsOfServiceAndPrivacyPolicy.$invalid ||
+        this.$v.email.$invalid ||
+        this.$v.password.$invalid ||
+        this.$v.confirmPassword.$invalid
+      ) {
+        this.submitStatus = "ERROR";
+      } else {
+        // do your submit logic here
+        this.submitStatus = "PENDING";
+        api.register({
+          email: this.email,
+          password: this.password,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          gender: this.gender,
+          age: this.date,
+          phone: this.phone,
+          TermsOfServiceAndPrivacyPolicy: this.TermsOfServiceAndPrivacyPolicy,
+        });
+      }
     },
     confirmEmailAndPass() {
       this.$v.email.$touch();
       this.$v.password.$touch();
       this.$v.confirmPassword.$touch();
-      console.log("submit!");
+
       if (
         this.$v.email.$invalid ||
         this.$v.password.$invalid ||
@@ -389,6 +424,7 @@ export default {
       } else {
         // do your submit logic here
         this.submitStatus = "PENDING";
+        console.log("submit page: ", `${this.step}`);
         return this.step++;
       }
     },
@@ -399,7 +435,7 @@ export default {
       this.$v.gender.$touch();
       this.$v.phone.$touch();
       this.$v.TermsOfServiceAndPrivacyPolicy.$touch();
-      console.log("submit!");
+
       if (
         this.$v.firstName.$invalid ||
         this.$v.lastName.$invalid ||
@@ -412,12 +448,9 @@ export default {
       } else {
         // do your submit logic here
         this.submitStatus = "PENDING";
+        console.log("submit page: ", `${this.step}`);
         return this.step++;
       }
-    },
-    onPersonalInfo(Userdata) {
-      this.userPersonalInfo = Userdata;
-      console.log("child component said login", Userdata);
     },
   },
   computed: {
@@ -520,8 +553,5 @@ export default {
 <style scoped>
 .personal-info-block {
   padding: 2rem;
-}
-.createAccountButton {
-  margin: 15px 0 0 30%;
 }
 </style>

@@ -50,12 +50,210 @@
             Please enter a password for your account
           </span>
         </v-card-text>
+        <v-card-actions>
+          <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            :disabled="step === 3"
+            v-if="step !== 3"
+            color="primary"
+            depressed
+            @click="confirmEmailAndPass"
+          >
+            Next
+          </v-btn>
+        </v-card-actions>
       </v-window-item>
 
       <v-window-item :value="2">
         <div class="personal-info-block">
-          <regForm @personalInfo="onPersonalInfo" />
+          <form>
+            <v-text-field
+              v-model="firstName"
+              :error-messages="firstNameErrors"
+              :counter="10"
+              label="First Name"
+              required
+              @input="$v.firstName.$touch()"
+              @blur="$v.firstName.$touch()"
+            ></v-text-field>
+
+            <v-text-field
+              v-model="lastName"
+              :error-messages="lastNameErrors"
+              :counter="16"
+              label="Last Name"
+              required
+              @input="$v.lastName.$touch()"
+              @blur="$v.lastName.$touch()"
+            ></v-text-field>
+            <v-text-field
+              v-model="phone"
+              :error-messages="phoneErrors"
+              label="Phone"
+              required
+              @input="$v.phone.$touch()"
+              @blur="$v.phone.$touch()"
+            ></v-text-field>
+            <v-select
+              v-model="gender"
+              :items="items"
+              :error-messages="selectErrors"
+              label="Gender"
+              required
+              @change="$v.gender.$touch()"
+              @blur="$v.gender.$touch()"
+            ></v-select>
+            <div>
+              <v-menu
+                ref="menu"
+                v-model="menu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="date"
+                    label="Birthday date"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                    :error-messages="dateErrors"
+                    required
+                    @change="$v.date.$touch()"
+                    @blur="$v.date.$touch()"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="date"
+                  :active-picker.sync="activePicker"
+                  :max="
+                    new Date(
+                      Date.now() - new Date().getTimezoneOffset() * 60000
+                    )
+                      .toISOString()
+                      .substr(0, 10)
+                  "
+                  min="1950-01-01"
+                  @change="save"
+                ></v-date-picker>
+              </v-menu>
+            </div>
+
+            <v-checkbox
+              v-model="TermsOfServiceAndPrivacyPolicy"
+              color="deep-purple"
+              :error-messages="checkboxErrors"
+              required
+              @change="$v.TermsOfServiceAndPrivacyPolicy.$touch()"
+              @blur="$v.TermsOfServiceAndPrivacyPolicy.$touch()"
+            >
+              <template v-slot:label>
+                I agree to the&nbsp;
+                <a href="#" @click.stop.prevent="dialog = true"
+                  >Terms of Service</a
+                >
+                &nbsp;and&nbsp;
+                <a href="#" @click.stop.prevent="privacyPolicy = true"
+                  >Privacy Policy</a
+                >*
+              </template>
+            </v-checkbox>
+
+            <v-dialog
+              v-model="privacyPolicy"
+              absolute
+              max-width="400"
+              persistent
+            >
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-3">
+                  Privacy Policy
+                </v-card-title>
+                <v-card-text>
+                  2Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <v-btn
+                    text
+                    @click="
+                      (TermsOfServiceAndPrivacyPolicy = false),
+                        (privacyPolicy = false)
+                    "
+                  >
+                    No
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    class="white--text"
+                    color="deep-purple accent-4"
+                    @click="
+                      (TermsOfServiceAndPrivacyPolicy = true),
+                        (privacyPolicy = false)
+                    "
+                  >
+                    Yes
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="dialog" absolute max-width="400" persistent>
+              <v-card>
+                <v-card-title class="text-h5 grey lighten-3">
+                  Terms of Service
+                </v-card-title>
+                <v-card-text>
+                  1Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <v-btn
+                    text
+                    @click="
+                      (TermsOfServiceAndPrivacyPolicy = false), (dialog = false)
+                    "
+                  >
+                    No
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    class="white--text"
+                    color="deep-purple accent-4"
+                    @click="
+                      (TermsOfServiceAndPrivacyPolicy = true), (dialog = false)
+                    "
+                  >
+                    Yes
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </form>
         </div>
+        <v-card-actions>
+          <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            :disabled="step === 3"
+            v-if="step !== 3"
+            color="primary"
+            depressed
+            @click="confirmPersonalInfo"
+          >
+            Next
+          </v-btn>
+        </v-card-actions>
       </v-window-item>
 
       <v-window-item :value="3">
@@ -69,27 +267,41 @@
           <h3 class="text-h6 font-weight-light mb-2">
             Welcome to Nikki - Nails
           </h3>
+
+            <h1>{{ firstName }} {{ lastName }}</h1>
+            <h1>{{ email }}</h1>
+            <h1>{{ phone }}</h1>
+            <h1>{{ gender }}</h1>
+            <h1>{{ date }}</h1>
+            <h1>{{ TermsOfServiceAndPrivacyPolicy }}</h1>
+
           <span class="text-caption grey--text">Thanks for signing up!</span>
+          <v-btn
+            class="mr-4 createAccountButton"
+            color="primary"
+            @click="submit"
+          >
+            Create Account?
+          </v-btn>
         </div>
+        <v-card-actions>
+          <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            :disabled="step === 3"
+            v-if="step !== 3"
+            color="primary"
+            depressed
+            @click="confirmEmailAndPass"
+          >
+            Next
+          </v-btn>
+        </v-card-actions>
       </v-window-item>
     </v-window>
 
     <v-divider></v-divider>
-
-    <v-card-actions>
-      <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
-      <v-spacer></v-spacer>
-
-      <v-btn
-        :disabled="step === 3"
-        v-if="step !== 2"
-        color="primary"
-        depressed
-        @click="confirmEmailAndPass"
-      >
-        Next
-      </v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 
@@ -103,6 +315,7 @@ import {
   sameAs,
 } from "vuelidate/lib/validators";
 import regForm from "./regForm.vue";
+
 export default {
   mixins: [validationMixin],
 
@@ -115,6 +328,22 @@ export default {
       minLength: minLength(8),
       sameAsPassword: sameAs("password"),
     },
+    firstName: { required, maxLength: maxLength(10), minLength: minLength(3) },
+    lastName: { required, maxLength: maxLength(16), minLength: minLength(3) },
+    middleName: { maxLength: maxLength(10), minLength: minLength(3) },
+    phone: { required, maxLength: maxLength(10), minLength: minLength(10) },
+    gender: { required },
+    date: { required },
+    TermsOfServiceAndPrivacyPolicy: {
+      checked(val) {
+        return val;
+      },
+    },
+  },
+  watch: {
+    menu(val) {
+      val && setTimeout(() => (this.activePicker = "YEAR"));
+    },
   },
   data: () => ({
     step: 1,
@@ -123,17 +352,39 @@ export default {
     confirmPassword: "",
     dialog: false,
     agreeCreatedAccount: false,
+    userPersonalInfo: "",
+    TermsOfServiceAndPrivacyPolicy: false,
+    dialog: false,
+    privacyPolicy: false,
+    firstName: "",
+    lastName: "",
+    phone: "",
+    gender: null,
+    items: ["Male", "Female"],
+    activePicker: null,
+    date: null,
+    menu: false,
   }),
 
   methods: {
+    save(date) {
+      // method for date input
+      this.$refs.menu.save(date);
+    },
     submit() {
       this.$v.$touch();
       console.log(this.$v.$touch());
     },
     confirmEmailAndPass() {
+      this.$v.email.$touch();
+      this.$v.password.$touch();
+      this.$v.confirmPassword.$touch();
       console.log("submit!");
-      this.$v.$touch();
-      if (this.$v.$invalid) {
+      if (
+        this.$v.email.$invalid ||
+        this.$v.password.$invalid ||
+        this.$v.confirmPassword.$invalid
+      ) {
         this.submitStatus = "ERROR";
       } else {
         // do your submit logic here
@@ -141,8 +392,32 @@ export default {
         return this.step++;
       }
     },
-    onPersonalInfo(data) {
-      console.log("child component said login", data);
+    confirmPersonalInfo() {
+      this.$v.firstName.$touch();
+      this.$v.lastName.$touch();
+      this.$v.date.$touch();
+      this.$v.gender.$touch();
+      this.$v.phone.$touch();
+      this.$v.TermsOfServiceAndPrivacyPolicy.$touch();
+      console.log("submit!");
+      if (
+        this.$v.firstName.$invalid ||
+        this.$v.lastName.$invalid ||
+        this.$v.date.$invalid ||
+        this.$v.gender.$invalid ||
+        this.$v.phone.$invalid ||
+        this.$v.TermsOfServiceAndPrivacyPolicy.$invalid
+      ) {
+        this.submitStatus = "ERROR";
+      } else {
+        // do your submit logic here
+        this.submitStatus = "PENDING";
+        return this.step++;
+      }
+    },
+    onPersonalInfo(Userdata) {
+      this.userPersonalInfo = Userdata;
+      console.log("child component said login", Userdata);
     },
   },
   computed: {
@@ -189,6 +464,55 @@ export default {
       }
       return errors;
     },
+    checkboxErrors() {
+      const errors = [];
+      if (!this.$v.TermsOfServiceAndPrivacyPolicy.$dirty) return errors;
+      !this.$v.TermsOfServiceAndPrivacyPolicy.checked &&
+        errors.push("You must agree to continue!");
+      return errors;
+    },
+    selectErrors() {
+      const errors = [];
+      if (!this.$v.gender.$dirty) return errors;
+      !this.$v.gender.required && errors.push("Gender is required");
+      return errors;
+    },
+    dateErrors() {
+      const errors = [];
+      if (!this.$v.date.$dirty) return errors;
+      !this.$v.date.required && errors.push("Date is required");
+      return errors;
+    },
+    firstNameErrors() {
+      const errors = [];
+      if (!this.$v.firstName.$dirty) return errors;
+      !this.$v.firstName.maxLength &&
+        errors.push("First name must be at most 10 characters long");
+      !this.$v.firstName.minLength &&
+        errors.push("The First name must be at least 3 characters long");
+      !this.$v.firstName.required && errors.push("First name is required.");
+      return errors;
+    },
+    lastNameErrors() {
+      const errors = [];
+      if (!this.$v.lastName.$dirty) return errors;
+      !this.$v.lastName.maxLength &&
+        errors.push("Last name must be at most 16 characters long");
+      !this.$v.lastName.minLength &&
+        errors.push("The Last name must be at least 3 characters long");
+      !this.$v.lastName.required && errors.push("Last name is required.");
+      return errors;
+    },
+    phoneErrors() {
+      const errors = [];
+      if (!this.$v.phone.$dirty) return errors;
+      !this.$v.phone.maxLength &&
+        errors.push("Phone must be at most 10 characters long");
+      !this.$v.phone.minLength &&
+        errors.push("The Phone must be at least 10 characters long");
+      !this.$v.phone.required && errors.push("Phone is required.");
+      return errors;
+    },
   },
 };
 </script>
@@ -196,5 +520,8 @@ export default {
 <style scoped>
 .personal-info-block {
   padding: 2rem;
+}
+.createAccountButton {
+  margin: 15px 0 0 30%;
 }
 </style>

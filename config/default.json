@@ -7,5 +7,6 @@
   },
   "client": {
     "url": "http://localhost:3000"
-  }
+  },
+  "backendIP": "83.32.83"
 }

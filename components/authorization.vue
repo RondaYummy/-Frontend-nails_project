@@ -35,6 +35,8 @@
                     label="E-mail"
                     clearable
                     :rules="emailRules"
+                    @input="$v.email.$touch()"
+                    @blur="$v.email.$touch()"
                     required
                   ></v-text-field>
                 </v-col>
@@ -42,10 +44,22 @@
                   <v-text-field
                     v-model="password"
                     label="Password"
-                    clearable
                     :counter="26"
                     :rules="passwordRules"
+                    @input="$v.password.$touch()"
+                    @blur="$v.password.$touch()"
+                    :type="show1 ? 'text' : 'password'"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="show1 = !show1"
                     required
+                    loading
+                    ><template v-slot:progress>
+                      <v-progress-linear
+                        :value="progress"
+                        :color="color"
+                        absolute
+                        height="7"
+                      ></v-progress-linear> </template
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -55,7 +69,7 @@
                 :disabled="loading"
                 outlined
                 large
-                @click="loader = 'loading'"
+                @click="signIn"
               >
                 Авторизуватись
               </v-btn>
@@ -68,13 +82,29 @@
 </template>
 
 <script>
+import api from "../plugins/api";
+import { validationMixin } from "vuelidate";
+import {
+  required,
+  maxLength,
+  email,
+  minLength,
+} from "vuelidate/lib/validators";
+
 export default {
+  mixins: [validationMixin],
+  validations: {
+    email: { required, email },
+    password: { required, maxLength: maxLength(26), minLength: minLength(8) },
+  },
   data: () => ({
+    show1: false,
     sheet: false,
     email: "",
     password: "",
     loader: null,
     loading: false,
+    submitStatus: "",
     emailRules: [
       (v) => !!v || "Потрібний E-mail",
       (v) => /.+@.+\..+/.test(v) || "E-mail пошта повинна бути дійсною",
@@ -94,6 +124,31 @@ export default {
       setTimeout(() => (this[l] = false), 3000);
 
       this.loader = null;
+    },
+  },
+  methods: {
+    signIn() {
+      this.loader = "loading";
+      this.$v.$touch();
+      if (this.$v.email.$invalid || this.$v.password.$invalid) {
+        this.submitStatus = "ERROR";
+      } else {
+        // do your submit logic here
+        api.login({
+          email: this.email,
+          password: this.password,
+        });
+        this.submitStatus = "PENDING";
+        console.log("Authorization...");
+      }
+    },
+  },
+  computed: {
+    progress() {
+      return Math.min(100, this.password.length * 6);
+    },
+    color() {
+      return ["error", "warning", "success"][Math.floor(this.progress / 40)];
     },
   },
 };

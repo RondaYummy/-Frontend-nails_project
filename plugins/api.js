@@ -10,7 +10,7 @@ const axios = Axios.create(baseConfig);
 
 export default {
   login(v) {
-    return axios.post('/auth/signin', v);
+    return axios.post('/signin', v);
   },
   async register(v) {
     const {

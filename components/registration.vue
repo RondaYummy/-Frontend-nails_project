@@ -20,6 +20,7 @@
             required
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
+            clearable
           ></v-text-field>
           <span class="text-caption grey--text text--darken-1">
             This is the email you will use to login to your Nikki - Nails
@@ -29,22 +30,35 @@
         <v-card-text>
           <v-text-field
             label="Password"
-            type="password"
+            :type="show1 ? 'text' : 'password'"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show1 = !show1"
             :counter="26"
             required
             v-model="password"
             :error-messages="passwordErrors"
             @input="$v.password.$touch()"
             @blur="$v.password.$touch()"
+            loading
+            ><template v-slot:progress>
+              <v-progress-linear
+                :value="progress"
+                :color="color"
+                absolute
+                height="7"
+              ></v-progress-linear> </template
           ></v-text-field>
           <v-text-field
             label="Confirm Password"
-            type="password"
+            :type="show2 ? 'text' : 'password'"
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show2 = !show2"
             required
             v-model="confirmPassword"
             :error-messages="confirmPasswordErrors"
             @input="$v.confirmPassword.$touch()"
             @blur="$v.confirmPassword.$touch()"
+            clearable
           ></v-text-field>
           <span class="text-caption grey--text text--darken-1">
             Please enter a password for your account
@@ -280,7 +294,8 @@
             {{ phone }}
           </span>
           <span class="text-h6 font-weight-light mb-2"
-            >Стать: {{ gender }}</span
+            ><h3>Стать:</h3>
+            {{ gender }}</span
           >
           <span class="text-h6 font-weight-light mb-2">
             <h3>День народження:</h3>
@@ -301,13 +316,7 @@
           <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
           <v-spacer></v-spacer>
 
-          <v-btn
-
-            color="primary"
-            @click="submit"
-          >
-            Create Account?
-          </v-btn>
+          <v-btn color="primary" @click="submit"> Create Account? </v-btn>
         </v-card-actions>
       </v-window-item>
     </v-window>
@@ -374,6 +383,8 @@ export default {
     activePicker: null,
     date: null,
     menu: false,
+    show1: false,
+    show2: false,
   }),
 
   methods: {
@@ -464,6 +475,12 @@ export default {
           return "Account created";
       }
     },
+    progress() {
+      return Math.min(100, this.password.length * 6);
+    },
+    color() {
+      return ["error", "warning", "success"][Math.floor(this.progress / 40)];
+    },
     emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
@@ -485,13 +502,10 @@ export default {
       const errors = [];
       if (!this.$v.confirmPassword.$dirty) return errors;
       !this.$v.confirmPassword.maxLength &&
-        errors.push("confirmPasswordErrors must be at most 26 characters long");
+        errors.push("Password must be at most 26 characters long");
       !this.$v.confirmPassword.minLength &&
-        errors.push(
-          "The confirmPasswordErrors must be at least 8 characters long"
-        );
-      !this.$v.confirmPassword.required &&
-        errors.push("confirmPasswordErrors is required.");
+        errors.push("The password must be at least 8 characters long");
+      !this.$v.confirmPassword.required && errors.push("Password is required.");
       if (!this.$v.confirmPassword.sameAsPassword) {
         errors.push("Passwords must be identical.");
       }

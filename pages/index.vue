@@ -71,24 +71,14 @@ main {
   background-repeat: no-repeat;
   position: relative;
 }
-main::after {
-  content: "";
-  top: 690px;
-  left: 0;
-  height: 100px;
-  width: 100%;
-  display: block;
-  background: url("../assets/bg_footer.png") bottom center repeat-x;
-  background-size: contain;
-  position: absolute;
-  z-index: 2;
-}
+
 .main-section {
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  height: 800px;
+  height: 840px;
+  position: relative;
 
   h1 {
     color: #454546;
@@ -137,5 +127,17 @@ main::after {
       background-color: #2ca354;
     }
   }
+}
+.main-section::after {
+  content: "";
+  bottom: 0;
+  left: 0;
+  height: 150px;
+  width: 100%;
+  display: block;
+  background: url("../assets/bg_footer.png") bottom center repeat-x;
+  background-size: contain;
+  position: absolute;
+  z-index: 2;
 }
 </style>

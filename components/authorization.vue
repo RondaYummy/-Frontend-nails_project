@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-bottom-sheet v-model="sheet" inset>
+    <v-bottom-sheet v-model="sheet" persistent inset>
       <template v-slot:activator="{ on, attrs }">
         <v-chip
           class="ma-2"
@@ -14,17 +14,31 @@
           Authorization
         </v-chip>
       </template>
+
       <v-sheet class="text-center auth-main" height="500px">
+        <v-btn
+          class="mt-6 mb-6 text-h6"
+          elevation="2"
+          plain
+          rounded
+          text
+          color="error"
+          @click="sheet = !sheet"
+        >
+          CLOSE / ЗАКРИТИ
+        </v-btn>
+
         <p class="text-h6 font-weight-light mb-2">
           <span>
             <h3>«Nikki - Nails»</h3>
             – персоналізований комплекс послуг для ідеального образу</span
           >
         </p>
+        <v-alert text dense color="teal" icon="mdi-account-clock" border="left">
+          Це необідно для того, щоб ви могли економити час при записі на прийом
+          та получати приємні подарунки на ваш аккаунт.
+        </v-alert>
 
-        <v-btn class="mt-6" text color="error" @click="sheet = !sheet">
-          close
-        </v-btn>
         <div class="my-3">
           <v-form>
             <v-container>
@@ -104,7 +118,6 @@ export default {
     password: "",
     loader: null,
     loading: false,
-    submitStatus: "",
     emailRules: [
       (v) => !!v || "Потрібний E-mail",
       (v) => /.+@.+\..+/.test(v) || "E-mail пошта повинна бути дійсною",
@@ -120,26 +133,27 @@ export default {
     loader() {
       const l = this.loader;
       this[l] = !this[l];
-
-      setTimeout(() => (this[l] = false), 3000);
-
       this.loader = null;
     },
   },
   methods: {
-    signIn() {
+    async signIn() {
       this.loader = "loading";
       this.$v.$touch();
-      if (this.$v.email.$invalid || this.$v.password.$invalid) {
-        this.submitStatus = "ERROR";
+      if (this.$v.$invalid) {
+        console.log("ERROR");
       } else {
         // do your submit logic here
-        api.login({
+        await api.login({
           email: this.email,
           password: this.password,
         });
-        this.submitStatus = "PENDING";
+        this.loading = false;
+
         console.log("Authorization...");
+        this.sheet = false;
+        this.email = "";
+        this.password = "";
       }
     },
   },

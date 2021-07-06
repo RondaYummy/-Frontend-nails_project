@@ -392,24 +392,11 @@ export default {
       // method for date input
       this.$refs.menu.save(date);
     },
-    submit() {
+    async submit() {
       this.$v.$touch();
-      if (
-        this.$v.firstName.$invalid ||
-        this.$v.lastName.$invalid ||
-        this.$v.date.$invalid ||
-        this.$v.gender.$invalid ||
-        this.$v.phone.$invalid ||
-        this.$v.TermsOfServiceAndPrivacyPolicy.$invalid ||
-        this.$v.email.$invalid ||
-        this.$v.password.$invalid ||
-        this.$v.confirmPassword.$invalid
-      ) {
-        this.submitStatus = "ERROR";
-      } else {
+      if (!this.$v.$invalid) {
         // do your submit logic here
-        this.submitStatus = "PENDING";
-        api.register({
+        await api.register({
           email: this.email,
           password: this.password,
           firstName: this.firstName,
@@ -419,6 +406,12 @@ export default {
           phone: this.phone,
           TermsOfServiceAndPrivacyPolicy: this.TermsOfServiceAndPrivacyPolicy,
         });
+        await api.login({
+          email: this.email,
+          password: this.password,
+        });
+
+        this.$router.push("/");
       }
     },
     confirmEmailAndPass() {
@@ -431,10 +424,9 @@ export default {
         this.$v.password.$invalid ||
         this.$v.confirmPassword.$invalid
       ) {
-        this.submitStatus = "ERROR";
+        console.log("ERROR");
       } else {
         // do your submit logic here
-        this.submitStatus = "PENDING";
         console.log("submit page: ", `${this.step}`);
         return this.step++;
       }
@@ -455,10 +447,9 @@ export default {
         this.$v.phone.$invalid ||
         this.$v.TermsOfServiceAndPrivacyPolicy.$invalid
       ) {
-        this.submitStatus = "ERROR";
+        console.log("ERROR");
       } else {
         // do your submit logic here
-        this.submitStatus = "PENDING";
         console.log("submit page: ", `${this.step}`);
         return this.step++;
       }

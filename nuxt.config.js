@@ -82,6 +82,11 @@ export default {
         name: '/registration',
         path: '/registration',
         component: resolve(__dirname, 'components/registration.vue')
+      }),
+      routes.push({
+        name: '/salon',
+        path: '/salon',
+        component: resolve(__dirname, 'components/salon_profile.vue')
       })
     },
 

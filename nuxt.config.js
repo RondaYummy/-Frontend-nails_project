@@ -50,9 +50,7 @@ export default {
   },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios',
-    ['cookie-universal-nuxt', {
-      alias: 'cookiz'
-    }],
+    'cookie-universal-nuxt',
   ],
   axios: {
     // proxy: true

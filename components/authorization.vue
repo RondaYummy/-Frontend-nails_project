@@ -150,16 +150,19 @@ export default {
           password: this.password,
         });
 
-        this.$store.commit("user/add", user.data.user);
+        // this.$store.commit("user/add", user.data.user);
+        
         console.log(this.$store.getters.getUser);
 
-        this.$cookiz.set("tokens", user.data, {
-          httpOnly: true,
-          secure: true,
-        });
-        const cookieRes = this.$cookiz.get("tokens");
-        console.log(cookieRes);
-        
+        // this.$cookies.set("tokens", user.data, {
+        //   path: "/",
+        //   maxAge: 60 * 60 * 24 * 7,
+        //   secure: true,
+        // });
+
+        // const cookieRes = this.$cookies.get("tokens");
+        // console.log('auth ',cookieRes);
+
         this.loading = false;
         console.log("Authorization...");
         this.sheet = false;

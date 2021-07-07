@@ -49,7 +49,14 @@ export default {
     port: config.get('server.url.port')
   },
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['@nuxtjs/axios',
+    ['cookie-universal-nuxt', {
+      alias: 'cookiz'
+    }],
+  ],
+  axios: {
+    // proxy: true
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -79,15 +86,16 @@ export default {
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
-        name: '/registration',
-        path: '/registration',
-        component: resolve(__dirname, 'components/registration.vue')
-      }),
-      routes.push({
-        name: '/salon',
-        path: '/salon',
-        component: resolve(__dirname, 'components/salon_profile.vue')
-      })
+          name: '/registration',
+          path: '/registration',
+          component: resolve(__dirname, 'components/registration.vue'),
+
+        }),
+        routes.push({
+          name: '/salon',
+          path: '/salon',
+          component: resolve(__dirname, 'components/salon_profile.vue')
+        })
     },
 
   }

@@ -1,8 +1,8 @@
 
-// export default function ({ $axios, redirect }) {
-//    $axios.onError(error => {
-//      if(error.response.status === 500) {
-//        redirect('/sorry')
-//      }
-//    })
-//  }
+export default function ({ $axios }) {
+   $axios.onError(error => {
+     if(error.response.status === '401') {
+      this.$router.pust('/sorry')
+     }
+   })
+ }

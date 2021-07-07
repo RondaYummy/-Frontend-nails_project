@@ -97,6 +97,7 @@
 
 <script>
 import api from "../plugins/api";
+
 import { validationMixin } from "vuelidate";
 import {
   required,
@@ -144,12 +145,22 @@ export default {
         console.log("ERROR");
       } else {
         // do your submit logic here
-        await api.login({
+        const user = await api.login({
           email: this.email,
           password: this.password,
         });
-        this.loading = false;
 
+        this.$store.commit("user/add", user.data.user);
+        console.log(this.$store.getters.getUser);
+
+        this.$cookiz.set("tokens", user.data, {
+          httpOnly: true,
+          secure: true,
+        });
+        const cookieRes = this.$cookiz.get("tokens");
+        console.log(cookieRes);
+        
+        this.loading = false;
         console.log("Authorization...");
         this.sheet = false;
         this.email = "";

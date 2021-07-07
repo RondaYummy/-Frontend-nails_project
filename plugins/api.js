@@ -12,11 +12,11 @@ export default {
   login(v) {
     return axios.post('/signin', v);
   },
-  async register(v) {
-    const {
-      message,
-      user
-    } = await axios.post('/registration', v).then(res => res.data);
-
+  logout(userId) {
+    return axios.post('/logout', userId);
   },
+  async register(v) {
+    return axios.post('/registration', v).then(res => res.data);
+  },
+  
 };

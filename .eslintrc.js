@@ -16,9 +16,9 @@ module.exports = {
     'plugin:nuxt/recommended'
   ],
   // add your custom rules here
-  rules: { 
-    eslint linebreak-style: ["error", "windows"],
-   },
+  rules: {
+    eslint linebreak - style: ["error", "windows"]
+  },
   globals: {
     $nuxt: true,
     mapkit: false

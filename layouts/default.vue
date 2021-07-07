@@ -20,7 +20,13 @@
       </v-row>
 
       <v-spacer />
-      <v-badge :content="messages" :value="messages" color="green" overlap class="awatar_main">
+      <v-badge
+        :content="messages"
+        :value="messages"
+        color="green"
+        overlap
+        class="awatar_main"
+      >
         <v-row justify="center">
           <v-menu bottom min-width="200px" rounded offset-y>
             <template v-slot:activator="{ on }">
@@ -43,7 +49,9 @@
                   <v-divider class="my-3"></v-divider>
                   <v-btn depressed rounded text> Edit Account </v-btn>
                   <v-divider class="my-3"></v-divider>
-                  <v-btn depressed rounded text> Disconnect </v-btn>
+                  <v-btn depressed rounded text @click="logout(user._id)">
+                    Disconnect
+                  </v-btn>
                 </div>
               </v-list-item-content>
             </v-card>
@@ -51,6 +59,15 @@
         </v-row>
       </v-badge>
     </v-app-bar>
+    <v-snackbar v-model="snackbar" :timeout="timeout">
+      {{ disconnectText }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-main>
       <!-- <v-container> -->
       <nuxt />
@@ -65,6 +82,7 @@
 
 <script>
 import authComponent from "../components/authorization.vue";
+import api from "../plugins/api";
 
 export default {
   components: {
@@ -81,7 +99,18 @@ export default {
         fullName: "John Doe",
         email: "john.doe@doe.com",
       },
+      snackbar: false,
+      disconnectText: "You are logged out.",
+      timeout: 2000,
     };
+  },
+  methods: {
+    async logout() {
+      // userId не має ще
+      await api.logout(this.$store.getters.getUser.userId);
+      this.snackbar = true;
+      this.$router.push(`/`);
+    },
   },
 };
 </script>
@@ -89,7 +118,7 @@ export default {
 * {
   text-decoration: none;
 }
-.awatar_main{
+.awatar_main {
   margin: 30px;
 }
 .tittle {

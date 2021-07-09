@@ -152,7 +152,7 @@ export default {
       this.password = "";
       this.loading = false;
     },
-    async signIn() {
+    signIn() {
       this.loader = "loading";
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -165,27 +165,17 @@ export default {
             password: this.password,
           })
           .then((response) => {
-            this.$store.commit("user/add", response.data.user);
             this.sheet = false;
             this.loading = false;
             this.email = "";
             this.password = "";
-            this.errorMessage = null;
+            this.errorMessage = "";
+            this.$store.commit("user/add", response.data.user);
           })
           .catch((error) => {
             this.errorMessage = error.response.data || error.message;
             this.loading = false;
           });
-
-        // this.$store.commit("user/add", user.data.user);
-        console.log("storeee", this.$store.getters.getUser);
-
-        // this.$cookies.set("tokens", user.data, {
-        //   path: "/",
-        //   maxAge: 60 * 60 * 24 * 7,
-        //   secure: true,
-        // });
-        // const cookieRes = this.$cookies.get("tokens");
       }
     },
   },

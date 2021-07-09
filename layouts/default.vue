@@ -47,7 +47,9 @@
                     {{ user.email }}
                   </p>
                   <v-divider class="my-3"></v-divider>
-                  <v-btn depressed rounded text> Edit Account </v-btn>
+                  <v-btn depressed rounded text @click="getUser">
+                    Edit Account
+                  </v-btn>
                   <v-divider class="my-3"></v-divider>
                   <v-btn depressed rounded text @click="logout(user._id)">
                     Disconnect
@@ -97,7 +99,7 @@ export default {
       user: {
         initials: "JD",
         fullName: "John Doe",
-        email: "john.doe@doe.com",
+        email: "default@email.com",
       },
       snackbar: false,
       disconnectText: "You are logged out.",
@@ -106,10 +108,14 @@ export default {
   },
   methods: {
     async logout() {
-      // userId не має ще
-      await api.logout(this.$store.getters.getUser.userId);
+      await api.logout({ userId: this.$store.getters.getUser._id });
       this.snackbar = true;
       this.$router.push(`/`);
+      console.log("Disconeting...");
+    },
+    getUser() {
+      console.log(this.userData);
+      console.log("stores", this.$store.getters.getUser);
     },
   },
 };

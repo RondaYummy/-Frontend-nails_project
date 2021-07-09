@@ -23,7 +23,7 @@
           rounded
           text
           color="error"
-          @click="sheet = !sheet"
+          @click="close"
         >
           CLOSE / ЗАКРИТИ
         </v-btn>
@@ -77,6 +77,12 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
+              <h2
+                class="errorMessage"
+                v-if="this.errorMessage.message === 'AuthError'"
+              >
+                Перевірте будь ласка введені дані!
+              </h2>
               <v-btn
                 class="ma-2"
                 :loading="loading"
@@ -119,6 +125,7 @@ export default {
     password: "",
     loader: null,
     loading: false,
+    errorMessage: "",
     emailRules: [
       (v) => !!v || "Потрібний E-mail",
       (v) => /.+@.+\..+/.test(v) || "E-mail пошта повинна бути дійсною",
@@ -138,6 +145,13 @@ export default {
     },
   },
   methods: {
+    close() {
+      this.sheet = !this.sheet;
+      this.errorMessage = "";
+      this.email = "";
+      this.password = "";
+      this.loading = false;
+    },
     async signIn() {
       this.loader = "loading";
       this.$v.$touch();
@@ -145,29 +159,33 @@ export default {
         console.log("ERROR");
       } else {
         // do your submit logic here
-        const user = await api.login({
-          email: this.email,
-          password: this.password,
-        });
+        api
+          .login({
+            email: this.email,
+            password: this.password,
+          })
+          .then((response) => {
+            this.$store.commit("user/add", response.data.user);
+            this.sheet = false;
+            this.loading = false;
+            this.email = "";
+            this.password = "";
+            this.errorMessage = null;
+          })
+          .catch((error) => {
+            this.errorMessage = error.response.data || error.message;
+            this.loading = false;
+          });
 
         // this.$store.commit("user/add", user.data.user);
-        
-        console.log(this.$store.getters.getUser);
+        console.log("storeee", this.$store.getters.getUser);
 
         // this.$cookies.set("tokens", user.data, {
         //   path: "/",
         //   maxAge: 60 * 60 * 24 * 7,
         //   secure: true,
         // });
-
         // const cookieRes = this.$cookies.get("tokens");
-        // console.log('auth ',cookieRes);
-
-        this.loading = false;
-        console.log("Authorization...");
-        this.sheet = false;
-        this.email = "";
-        this.password = "";
       }
     },
   },
@@ -183,6 +201,10 @@ export default {
 </script>
 
 <style>
+.errorMessage {
+  color: red;
+  text-shadow: 0.5px 0.5px 0.5px black;
+}
 .auth-main {
   padding: 3rem;
 }

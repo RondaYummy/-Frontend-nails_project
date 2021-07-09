@@ -311,6 +311,12 @@
           </span>
 
           <span class="text-caption grey--text">Thanks for signing up!</span>
+          <h2
+            class="errorMessage"
+            v-if="this.errorMessage.errors === 'RegError'"
+          >
+            Такий користувач уже створений, перевірте введені дані!
+          </h2>
         </div>
         <v-card-actions>
           <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
@@ -385,6 +391,7 @@ export default {
     menu: false,
     show1: false,
     show2: false,
+    errorMessage: "",
   }),
 
   methods: {
@@ -396,22 +403,27 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         // do your submit logic here
-        await api.register({
-          email: this.email,
-          password: this.password,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          gender: this.gender,
-          age: this.date,
-          phone: this.phone,
-          TermsOfServiceAndPrivacyPolicy: this.TermsOfServiceAndPrivacyPolicy,
-        });
-        await api.login({
-          email: this.email,
-          password: this.password,
-        });
-
-        this.$router.push("/");
+        await api
+          .register({
+            email: this.email,
+            password: this.password,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            gender: this.gender,
+            age: this.date,
+            phone: this.phone,
+            TermsOfServiceAndPrivacyPolicy: this.TermsOfServiceAndPrivacyPolicy,
+          })
+          .then(() => {
+            api.login({
+              email: this.email,
+              password: this.password,
+            });
+            this.$router.push("/");
+          })
+          .catch((error) => {
+            this.errorMessage = error.response.data || error.message;
+          });
       }
     },
     confirmEmailAndPass() {
@@ -556,6 +568,10 @@ export default {
 </script>
 
 <style scoped>
+.errorMessage {
+  color: red;
+  text-shadow: 0.5px 0.5px 0.5px black;
+}
 .personal-info-block {
   padding: 2rem;
 }

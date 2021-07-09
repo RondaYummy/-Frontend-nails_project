@@ -65,7 +65,7 @@
           </span>
         </v-card-text>
         <v-card-actions>
-          <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
+          <v-btn :disabled="step === 1" text @click="back"> Back </v-btn>
           <v-spacer></v-spacer>
 
           <v-btn
@@ -319,7 +319,7 @@
           </h2>
         </div>
         <v-card-actions>
-          <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
+          <v-btn :disabled="step === 1" text @click="back"> Back </v-btn>
           <v-spacer></v-spacer>
 
           <v-btn color="primary" @click="submit"> Create Account? </v-btn>
@@ -395,6 +395,10 @@ export default {
   }),
 
   methods: {
+    back() {
+      this.step--;
+      this.errorMessage = "";
+    },
     save(date) {
       // method for date input
       this.$refs.menu.save(date);

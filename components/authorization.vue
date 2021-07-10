@@ -156,7 +156,7 @@ export default {
       this.loader = "loading";
       this.$v.$touch();
       if (this.$v.$invalid) {
-        console.log("ERROR");
+        this.loader = "";
       } else {
         // do your submit logic here
         api

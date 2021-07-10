@@ -1,7 +1,7 @@
 <template>
   <div class="service">
-    <v-hover >
-      <v-card :loading="loading" class="mx-auto my-12" max-width="300">
+    <v-hover>
+      <v-card :loading="loading" class="mx-auto my-2" max-width="320">
         <template slot="progress">
           <v-progress-linear
             color="deep-purple"
@@ -13,8 +13,10 @@
         <v-img
           height="250"
           src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-          ><v-card-title class="tittle_card">Cafe Badilico</v-card-title>
-          <v-card-title class="tittle_card price_card">Badilico</v-card-title>
+          ><v-card-title class="tittle_card">{{ serviceName }}</v-card-title>
+          <v-card-title class="tittle_card price_card">{{
+            servicePrice
+          }}</v-card-title>
         </v-img>
 
         <v-card-text>
@@ -28,14 +30,17 @@
               size="14"
             ></v-rating>
 
-            <div class="grey--text ms-4">4.5 (413)</div>
+            <div class="grey--text ms-4">
+              {{ serviceRating }} ({{ howManyVoted }})
+            </div>
           </v-row>
 
-          <div class="my-4 text-subtitle-1">$ • Location, Salon Name</div>
+          <div class="my-4 text-subtitle-1">
+            $ • {{ salonLocation }}, {{ salonName }}
+          </div>
 
           <div>
-            Small plates, salads & sandwiches - an intimate setting with 12
-            indoor seats plus patio seating.
+            {{ serviceDescription }}
           </div>
         </v-card-text>
 
@@ -44,6 +49,32 @@
     </v-hover>
   </div>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    loading: false,
+    selection: 1,
+    serviceName: "Манікюр",
+    servicePrice: "400грн.",
+    salonLocation: "Location",
+    salonName: "Salon Name",
+    serviceDescription:
+      "Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.",
+    serviceRating: "4.5",
+
+    howManyVoted: "413",
+  }),
+
+  methods: {
+    reserve() {
+      this.loading = true;
+      setTimeout(() => (this.loading = false), 2000);
+    },
+  },
+};
+</script>
+
 <style lang="scss" scoped >
 // @import './../assets/fonts/fonts'; // dont working!!!!!!!!!!!!!!!! //todo edit import
 .service {
@@ -65,20 +96,3 @@
   font-weight: 300;
 }
 </style>
-
-<script>
-export default {
-  data: () => ({
-    loading: false,
-    selection: 1,
-  }),
-
-  methods: {
-    reserve() {
-      this.loading = true;
-
-      setTimeout(() => (this.loading = false), 2000);
-    },
-  },
-};
-</script>

@@ -109,6 +109,7 @@
               required
               @input="$v.phone.$touch()"
               @blur="$v.phone.$touch()"
+              placeholder="(__) ___ __ __"
             ></v-text-field>
             <v-select
               v-model="gender"

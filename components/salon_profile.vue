@@ -8,7 +8,7 @@
       prominent
       src="https://picsum.photos/1920/1080?random"
       fade-img-on-scroll
-      height="300px"
+      height="200px"
       scroll-target="#scrolling-techniques-3"
     >
       <template v-slot:img="{ props }">
@@ -24,6 +24,22 @@
       <v-app-bar-title>SALON_NAME </v-app-bar-title>
 
       <v-spacer></v-spacer>
+      <div class="text-center d-flex">
+        <span class="font-weight-bold pt-2">
+          {{ rating }}
+        </span>
+        <div class="text-center">
+          <v-rating
+            v-model="rating"
+            color="yellow darken-3"
+            background-color="grey darken-1"
+            empty-icon="$ratingFull"
+            half-increments
+            hover
+            large
+          ></v-rating>
+        </div>
+      </div>
 
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
@@ -48,10 +64,10 @@
       </v-menu>
 
       <template v-slot:extension>
-        <v-tabs align-with-title>
-          <v-tab>Main</v-tab>
-          <v-tab>Services</v-tab>
-          <v-tab>Masters</v-tab>
+        <v-tabs align-with-title v-model="tab">
+          <v-tab v-for="item in itemsMenu" :key="item">
+            {{ item }}
+          </v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
@@ -60,13 +76,47 @@
       class="overflow-y-auto"
       max-height="700"
     >
-      <v-container style="height: 1000px"></v-container>
+      <v-container style="height: 300px">Lorem100</v-container>
+      <v-tabs-items v-model="tab">
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text v-text="text"></v-card-text>
+            <reviews-page />
+          </v-card>
+        </v-tab-item>
+
+        <v-tab-item>
+          <v-card flat class="d-flex flex-wrap justify-space-around">
+            <h1>Services page</h1>
+          </v-card>
+        </v-tab-item>
+
+        <v-tab-item>
+          <v-card flat class="d-flex flex-wrap justify-space-around">
+            <masters-list />
+            <masters-list />
+            <masters-list />
+            <masters-list />
+            <masters-list />
+            <masters-list />
+            <masters-list />
+            <masters-list />
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
     </v-sheet>
   </v-card>
 </template>
 
 <script>
+import reviewsPage from "./Salon/reviews_page.vue";
+import mastersList from "./Salon/masters_list.vue";
+
 export default {
+  components: {
+    reviewsPage,
+    mastersList,
+  },
   data: () => ({
     items: [
       { title: "Click Me" },
@@ -74,6 +124,12 @@ export default {
       { title: "Click Me" },
       { title: "Click Me 2" },
     ],
+    tab: null,
+    itemsMenu: ["Main", "Services", "Masters"],
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veveniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+
+    length: 5,
+    rating: 3.5,
   }),
 };
 </script>

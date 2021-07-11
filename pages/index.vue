@@ -48,6 +48,7 @@
             <main_services />
             <main_services />
             <main_services />
+            <main_services />
           </section>
           <v-btn
             class="ma-2"
@@ -161,7 +162,7 @@ main {
 }
 .main-section::after {
   content: "";
-  bottom: 0;
+  bottom: 170px;
   left: 0;
   height: 150px;
   width: 100%;

@@ -98,6 +98,7 @@
         </div>
       </v-sheet>
     </v-bottom-sheet>
+    <v-overlay :value="overlay"></v-overlay>
   </div>
 </template>
 
@@ -121,6 +122,7 @@ export default {
   data: () => ({
     show1: false,
     sheet: false,
+    overlay: false,
     email: "",
     password: "",
     loader: null,
@@ -143,6 +145,11 @@ export default {
       this[l] = !this[l];
       this.loader = null;
     },
+          overlay (val) {
+        val && setTimeout(() => {
+          this.overlay = false
+        }, 2000)
+      },
   },
   methods: {
     close() {
@@ -151,6 +158,7 @@ export default {
       this.email = "";
       this.password = "";
       this.loading = false;
+      this.overlay = false
     },
     signIn() {
       this.loader = "loading";

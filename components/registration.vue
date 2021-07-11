@@ -296,8 +296,9 @@
           </span>
           <span class="text-h6 font-weight-light mb-2"
             ><h3>Стать:</h3>
-            {{ gender }}</span
-          >
+            <span v-if="gender === 'Male'">Чоловіча</span>
+            <span v-if="gender === 'Female'">жіноча</span>
+          </span>
           <span class="text-h6 font-weight-light mb-2">
             <h3>День народження:</h3>
             {{ date }}
@@ -575,6 +576,7 @@ export default {
 <style scoped>
 .ifError {
   border: 1px solid red;
+  box-shadow: inset 1em 0.2em 0.2em red;
 }
 .errorMessage {
   color: red;

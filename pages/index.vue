@@ -1,7 +1,7 @@
 <template>
   <main>
     <v-row justify="center" align="center">
-      <v-col cols="12" sm="8" md="6">
+      <v-col cols="12" sm="12" md="10">
         <section class="main-section">
           <h1>Nikki Nails</h1>
 
@@ -38,11 +38,29 @@
           <em><small>&mdash; Julia Restoin Roitfeld</small></em>
         </div>
         <hr class="my-3" />
-        <section class="main_services">
-          <main_services />
-          <main_services />
-          <main_services />
-        </section>
+        <div class="services__main_block">
+          <section class="main_services">
+            <main_services />
+            <main_services />
+            <main_services />
+            <main_services />
+            <main_services />
+            <main_services />
+            <main_services />
+            <main_services />
+          </section>
+          <v-btn
+            class="ma-2"
+            :loading="loading"
+            :disabled="loading"
+            outlined
+            large
+            width="200"
+            @click="getMoreServices"
+          >
+            Знайти більше
+          </v-btn>
+        </div>
       </v-col>
     </v-row>
   </main>
@@ -55,11 +73,24 @@ export default {
   components: {
     main_services,
   },
-  data: () => ({}),
+  data: () => ({
+    loading: false,
+  }),
+  methods: {
+    getMoreServices() {
+      this.loading = true;
+      console.log("Get more services logic here...");
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.services__main_block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .main_services {
   display: flex;
   justify-content: center;

@@ -271,7 +271,7 @@
         </v-card-actions>
       </v-window-item>
 
-      <v-window-item :value="3">
+      <v-window-item :value="3" :class="{ ifError: this.errorMessage.errors }">
         <div class="pa-4 text-center">
           <v-img
             class="mb-4"
@@ -476,11 +476,11 @@ export default {
     currentTitle() {
       switch (this.step) {
         case 1:
-          return "Sign-up and Create a password";
+          return "Дані для входу";
         case 2:
-          return "Write you personal info";
+          return "Персональна інформація";
         default:
-          return "Account created";
+          return "Підтвердіть створення аккаунту";
       }
     },
     progress() {
@@ -573,6 +573,9 @@ export default {
 </script>
 
 <style scoped>
+.ifError {
+  border: 1px solid red;
+}
 .errorMessage {
   color: red;
   text-shadow: 0.5px 0.5px 0.5px black;

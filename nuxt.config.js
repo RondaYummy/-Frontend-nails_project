@@ -32,6 +32,10 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
+  loading: {
+    color: 'blue',
+    height: '4px'
+  },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['~/plugins/axios.js'],
 
@@ -50,7 +54,9 @@ export default {
   },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios',
-  ['cookie-universal-nuxt', { alias: 'cookiz' }],
+    ['cookie-universal-nuxt', {
+      alias: 'cookiz'
+    }],
   ],
   axios: {
     // proxy: true

@@ -20,6 +20,7 @@
             required
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
+            @keydown.enter="confirmEmailAndPass"
             clearable
           ></v-text-field>
           <span class="text-caption grey--text text--darken-1">
@@ -39,6 +40,7 @@
             :error-messages="passwordErrors"
             @input="$v.password.$touch()"
             @blur="$v.password.$touch()"
+            @keydown.enter="confirmEmailAndPass"
             loading
             ><template v-slot:progress>
               <v-progress-linear
@@ -58,6 +60,7 @@
             :error-messages="confirmPasswordErrors"
             @input="$v.confirmPassword.$touch()"
             @blur="$v.confirmPassword.$touch()"
+            @keydown.enter="confirmEmailAndPass"
             clearable
           ></v-text-field>
           <span class="text-caption grey--text text--darken-1">
@@ -91,6 +94,7 @@
               required
               @input="$v.firstName.$touch()"
               @blur="$v.firstName.$touch()"
+              @click="confirmPersonalInfo"
             ></v-text-field>
 
             <v-text-field
@@ -101,6 +105,7 @@
               required
               @input="$v.lastName.$touch()"
               @blur="$v.lastName.$touch()"
+              @click="confirmPersonalInfo"
             ></v-text-field>
             <v-text-field
               v-model="phone"
@@ -109,6 +114,7 @@
               required
               @input="$v.phone.$touch()"
               @blur="$v.phone.$touch()"
+              @click="confirmPersonalInfo"
               placeholder="(__) ___ __ __"
             ></v-text-field>
             <v-select

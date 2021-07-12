@@ -15,7 +15,7 @@
         </v-chip>
       </template>
 
-      <v-sheet class="text-center auth-main" height="500px">
+      <v-sheet class="text-center auth-main" height="500px" @keydown.esc="close">
         <v-btn
           class="mt-6 mb-6 text-h6"
           elevation="2"
@@ -51,6 +51,7 @@
                     :rules="emailRules"
                     @input="$v.email.$touch()"
                     @blur="$v.email.$touch()"
+                    @keydown.enter="signIn"
                     required
                   ></v-text-field>
                 </v-col>
@@ -67,6 +68,7 @@
                     @click:append="show1 = !show1"
                     required
                     loading
+                    @keydown.enter="signIn"
                     ><template v-slot:progress>
                       <v-progress-linear
                         :value="progress"
@@ -145,11 +147,12 @@ export default {
       this[l] = !this[l];
       this.loader = null;
     },
-          overlay (val) {
-        val && setTimeout(() => {
-          this.overlay = false
-        }, 2000)
-      },
+    overlay(val) {
+      val &&
+        setTimeout(() => {
+          this.overlay = false;
+        }, 2000);
+    },
   },
   methods: {
     close() {
@@ -158,7 +161,7 @@ export default {
       this.email = "";
       this.password = "";
       this.loading = false;
-      this.overlay = false
+      this.overlay = false;
     },
     signIn() {
       this.loader = "loading";

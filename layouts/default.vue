@@ -1,21 +1,23 @@
 <template>
   <v-app light>
     <v-app-bar fixed app height="80px">
-      <a href="/" class="tittle"><v-toolbar-title v-text="title" /></a>
+      <nuxt-link to="/" class="tittle"
+        ><v-toolbar-title v-text="title"
+      /></nuxt-link>
       <v-row>
         <authComponent />
-        <a href="/registration">
+        <nuxt-link to="/registration">
           <v-chip class="ma-2" color="primary" outlined pill>
             Registration
             <v-icon right> mdi-account-outline </v-icon>
-          </v-chip></a
+          </v-chip></nuxt-link
         >
-        <a href="/salon">
+        <nuxt-link to="/salon">
           <v-chip class="ma-2" color="indigo darken-3" outlined>
             <v-icon left> mdi-fire </v-icon>
             Salon
             <h5 color="primary">[ * ]</h5>
-          </v-chip></a
+          </v-chip></nuxt-link
         >
       </v-row>
 
@@ -26,23 +28,28 @@
         color="green"
         overlap
         class="awatar_main"
+        v-if="loginIn"
       >
         <v-row justify="center">
           <v-menu bottom min-width="200px" rounded offset-y>
             <template v-slot:activator="{ on }">
               <v-btn icon x-large v-on="on">
                 <v-avatar color="brown" size="48">
-                  <span class="white--text text-h5">{{ user.initials }}</span>
+                  <span class="white--text text-h5"
+                    >{{ user.firstName[0] }}{{ user.lastName[0] }}</span
+                  >
                 </v-avatar>
               </v-btn>
             </template>
             <v-card>
               <v-list-item-content class="justify-center">
-                <div class="mx-auto text-center">
+                <div class="mx-auto text-center" v-if="user">
                   <v-avatar color="brown">
-                    <span class="white--text text-h5">{{ user.initials }}</span>
+                    <span class="white--text text-h5"
+                      >{{ user.firstName[0] }}{{ user.lastName[0] }}</span
+                    >
                   </v-avatar>
-                  <h3>{{ user.fullName }}</h3>
+                  <h3>{{ user.firstName }} {{ user.lastName }}</h3>
                   <p class="text-caption mt-1">
                     {{ user.email }}
                   </p>
@@ -73,12 +80,15 @@
     <v-main>
       <!-- <v-container> -->
       <nuxt />
-      
       <!-- </v-container> -->
     </v-main>
 
     <v-footer :absolute="!fixed" app>
       <span>&copy;2021 &mdash; {{ new Date().getFullYear() }}</span>
+      <span>
+        <span>«Nikki - Nails»</span> – персоналізований комплекс послуг для
+        ідеального образу</span
+      >
     </v-footer>
   </v-app>
 </template>
@@ -97,26 +107,31 @@ export default {
       title: "Nikki - Nails",
       messages: 66,
       show: false,
-      user: {
-        initials: "JD",
-        fullName: "John Doe",
-        email: "default@email.com",
-      },
       snackbar: false,
       disconnectText: "You are logged out.",
       timeout: 2000,
+      loginIn: false,
     };
+  },
+  computed: {
+    user: function () {
+      return this.$store.state.user.user;
+    },
+  },
+  watch: {
+    user: function () {
+      this.loginIn = true;
+    },
   },
   methods: {
     async logout() {
-      await api.logout({ userId: this.$store.getters.getUser._id });
+      await api.logout({ userId: this.$store.state.user._id });
       this.snackbar = true;
       this.$router.push(`/`);
       console.log("Disconeting...");
     },
     getUser() {
-      console.log(this.userData);
-      console.log("stores", this.$store.getters.getUser);
+      console.log("UserStore", this.$store.state.user.user);
     },
   },
 };

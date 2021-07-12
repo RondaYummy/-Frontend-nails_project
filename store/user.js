@@ -1,21 +1,20 @@
 // import {
 //   getUser
 // } from './getters'
-export const currentUser = () => ({
+export const state = () => ({
   user: {}
 })
 
 export const mutations = {
-  getUser(currentUser) {
-    return currentUser.user.user;
-  },
-
-  add(currentUser, user) {
-    currentUser.user = user;
+  add(state, user) {
+    state.user = user;
 
   },
-  // getUser(currentUser) {
-  //   getUser(currentUser)
-  // },
 
+}
+
+export const getters = {
+  getUser: (state) => {
+    return state.user
+  }
 }

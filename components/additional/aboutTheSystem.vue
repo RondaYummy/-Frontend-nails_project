@@ -1,8 +1,7 @@
 <template>
   <section>
-    <h1 style="aboutTheSystem__tittle">
+    <h1 class="aboutTheSystem__tittle">
       Інформація про персоналізований комплекс послуг для ідеального образу
-      Nikki - Nails
     </h1>
     <ul class="aboutTheSystem__items">
       <li class="aboutTheSystem__item">
@@ -51,6 +50,7 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+
 section {
   max-width: 78rem;
   padding-top: 15px;
@@ -60,7 +60,7 @@ section {
   .aboutTheSystem__tittle {
     padding-top: 40px;
     padding-bottom: 24px;
-    font-size: 22px;
+    font-size: 20px;
     text-transform: uppercase;
   }
   .aboutTheSystem__items {

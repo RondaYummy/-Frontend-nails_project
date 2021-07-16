@@ -2,9 +2,9 @@
   <main>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="12" md="10">
-        <section class="main-section">
+        <section class="main-section mainContainer">
           <div class="d38"></div>
-          <h1>Nikki - Nails</h1>
+          <h1 class="animated-word">Nikki-Nails</h1>
 
           <form>
             <div class="step__footer">
@@ -15,12 +15,8 @@
               <nuxt-link class="black__btn" to="#">Записатись</nuxt-link>
             </div>
           </form>
+          <bottom-arrow />
         </section>
-        <div>
-          <a class="butn butn__new" href="#">
-            <span>Мои проекты</span>
-          </a>
-        </div>
         <p>
           «Ніколи не забувайте про манікюр.Руки — перше, що кидається в очі
           після вашого лиця»
@@ -28,7 +24,12 @@
         <div class="text-xs-right">
           <em><small>&mdash; Julia Restoin Roitfeld</small></em>
         </div>
+        <a class="butn butn__new" href="#">
+          <span>Мої Проекти</span>
+        </a>
         <hr class="my-3" />
+    <about-the-system />
+
         <div class="services__main_block">
           <section class="main_services">
             <main_services />
@@ -55,21 +56,21 @@
       </v-col>
     </v-row>
 
-    <card
+    <!-- <card
       price="111"
       image="imagesss"
       description="Lorem reprehenderit perferendis, aspernatur, minus sapiente reiciendis doloremque vel blanditiis? Libero quos voluptatum totam reprehenderit nobis recusandae soluta!"
       name="Name card"
-    />
+    /> -->
 
-
-    <about-the-system />
   </main>
 </template>
 
 <script>
 import main_services from "../components/main_services.vue";
-import aboutTheSystem from '../components/additional/aboutTheSystem.vue';
+import aboutTheSystem from "../components/additional/aboutTheSystem.vue";
+
+
 import card from "../components/card_createEdit.vue";
 export default {
   components: {
@@ -104,6 +105,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.mainContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.animated-word {
+  font-family: Helvetica;
+  letter-spacing: 0.4em;
+  font-weight: 600;
+  font-size: 100px;
+  text-align: center;
+  color: #0d0d0e97;
+  cursor: pointer;
+  max-width: 600px;
+  margin-top: 20px;
+  background-color: rgba(245, 245, 245, 0.6);
+  margin-bottom: 20px;
+  width: 100%;
+  outline: 3px solid;
+  outline-color: rgba(71, 126, 232, 0.5);
+  outline-offset: 0.5rem;
+  transition: all 600ms cubic-bezier(0.2, 0, 0, 0.8);
+}
+
+.animated-word:hover {
+  color: #32336b;
+  outline-color: rgba(71, 126, 232, 0);
+  text-shadow: 0 0 1px white;
+  outline-offset: 300px;
+}
 // Start butn
 .butn {
   position: relative;
@@ -260,20 +292,18 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
 }
-main {
-  background-image: url("../assets/appearance.jpg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: relative;
-}
 
 .main-section {
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  height: 700px;
+  height: 530px;
   position: relative;
+  background-image: url("../assets/appearance.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-bottom: 7rem;
 
   h1 {
     color: #454546;
@@ -303,15 +333,14 @@ main {
 
   form {
     display: flex;
+    // margin-bottom: 5rem;
   }
 }
 .main-section::after {
   content: "";
-  bottom: 30px;
-  left: 0;
+  bottom: 0;
   height: 65px;
   width: 100%;
-  display: block;
   background: url("../assets/bg_footer.png") bottom center repeat-x;
   background-size: contain;
   position: absolute;
@@ -327,6 +356,7 @@ main {
   background: #32336b;
   box-shadow: -3em 3em #32336b;
   position: relative;
+  left: 2em;
 }
 .d38:before,
 .d38:after {

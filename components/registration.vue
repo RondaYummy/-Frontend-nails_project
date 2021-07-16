@@ -107,6 +107,7 @@
               @blur="$v.lastName.$touch()"
               @click="confirmPersonalInfo"
             ></v-text-field>
+
             <v-text-field
               v-model="phone"
               :error-messages="phoneErrors"
@@ -117,6 +118,7 @@
               @click="confirmPersonalInfo"
               placeholder="(__) ___ __ __"
             ></v-text-field>
+
             <v-select
               v-model="gender"
               :items="items"
@@ -126,6 +128,7 @@
               @change="$v.gender.$touch()"
               @blur="$v.gender.$touch()"
             ></v-select>
+
             <div>
               <v-menu
                 ref="menu"
@@ -292,10 +295,10 @@
             <h3>Ім'я та прізвище:</h3>
             {{ firstName }} {{ lastName }}
           </span>
-          <span class="text-h6 font-weight-light mb-2"
-            ><h3>E-mail:</h3>
-            {{ email }}</span
-          >
+          <span class="text-h6 font-weight-light mb-2">
+            <h3>E-mail:</h3>
+            {{ email }}
+          </span>
           <span class="text-h6 font-weight-light mb-2">
             <h3>Номер телефону:</h3>
             {{ phone }}
@@ -399,6 +402,7 @@ export default {
     menu: false,
     show1: false,
     show2: false,
+    title: 'Nikki - Nails | Registration',
     errorMessage: "",
   }),
 
@@ -575,6 +579,19 @@ export default {
       !this.$v.phone.required && errors.push("Phone is required.");
       return errors;
     },
+  },
+    head() {
+    return {
+      title: this.title,
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        {
+          hid: "salon",
+          name: "salon",
+          content: "My custom salon",
+        },
+      ],
+    };
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="service">
     <v-hover>
-      <v-card :loading="loading" class="mx-auto my-2" max-width="320">
+      <v-card :loading="loading" class="mx-auto my-2" max-width="270">
         <template slot="progress">
           <v-progress-linear
             color="deep-purple"
@@ -11,12 +11,12 @@
         </template>
 
         <v-img
-          height="250"
+          height="220"
           src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-          ><v-card-title class="tittle_card">{{ serviceName }}</v-card-title>
-          <v-card-title class="tittle_card price_card">{{
-            servicePrice
-          }}</v-card-title>
+          ><v-card-title class="tittle_card">{{ serviceName }} </v-card-title>
+          <v-card-title class="tittle_card price_card">
+            {{ servicePrice }}
+          </v-card-title>
         </v-img>
 
         <v-card-text>

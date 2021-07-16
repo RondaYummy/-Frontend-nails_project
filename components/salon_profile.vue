@@ -118,6 +118,7 @@ export default {
     mastersList,
   },
   data: () => ({
+    title: `Salon`,
     items: [
       { title: "Click Me" },
       { title: "Click Me" },
@@ -131,6 +132,19 @@ export default {
     length: 5,
     rating: 3.5,
   }),
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        {
+          hid: "salon",
+          name: "salon",
+          content: "My custom salon",
+        },
+      ],
+    };
+  },
 };
 </script>
 

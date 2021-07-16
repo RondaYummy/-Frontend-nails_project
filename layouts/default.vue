@@ -1,6 +1,8 @@
 <template>
   <v-app light>
     <v-app-bar fixed app height="80px">
+      <div class="d38"></div>
+
       <nuxt-link to="/" class="tittle"
         ><v-toolbar-title v-text="title"
       /></nuxt-link>
@@ -17,8 +19,8 @@
             <v-icon left> mdi-fire </v-icon>
             Salon
             <h5 color="primary">[ * ]</h5>
-          </v-chip></nuxt-link
-        >
+          </v-chip>
+        </nuxt-link>
       </v-row>
 
       <v-spacer />
@@ -35,9 +37,9 @@
             <template v-slot:activator="{ on }">
               <v-btn icon x-large v-on="on">
                 <v-avatar color="brown" size="48">
-                  <span class="white--text text-h5"
-                    >{{ user.firstName[0] }}{{ user.lastName[0] }}</span
-                  >
+                  <span class="white--text text-h5">
+                    {{ user.firstName[0] }}{{ user.lastName[0] }}
+                  </span>
                 </v-avatar>
               </v-btn>
             </template>
@@ -45,9 +47,9 @@
               <v-list-item-content class="justify-center">
                 <div class="mx-auto text-center" v-if="user">
                   <v-avatar color="brown">
-                    <span class="white--text text-h5"
-                      >{{ user.firstName[0] }}{{ user.lastName[0] }}</span
-                    >
+                    <span class="white--text text-h5">
+                      {{ user.firstName[0] }}{{ user.lastName[0] }}
+                    </span>
                   </v-avatar>
                   <h3>{{ user.firstName }} {{ user.lastName }}</h3>
                   <p class="text-caption mt-1">
@@ -68,6 +70,7 @@
         </v-row>
       </v-badge>
     </v-app-bar>
+
     <v-snackbar v-model="snackbar" :timeout="timeout">
       {{ disconnectText }}
 
@@ -87,8 +90,32 @@
       <span>&copy;2021 &mdash; {{ new Date().getFullYear() }}</span>
       <span>
         <span>«Nikki - Nails»</span> – персоналізований комплекс послуг для
-        ідеального образу</span
-      >
+        ідеального образу
+      </span>
+      <!-- Start SVG Image for filter #goo -->
+      <div style="display: none">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+          <defs>
+            <filter id="goo">
+              <feGaussianBlur
+                in="SourceGraphic"
+                stdDeviation="10"
+                result="blur"
+              />
+              <feColorMatrix
+                in="blur"
+                mode="matrix"
+                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+                result="goo"
+              />
+              <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+          </defs>
+          <circle cx="420" cy="150" fill="#3498db" filter="url(#goo)" r="80" />
+          <circle cx="200" cy="150" fill="#3498db" filter="url(#goo)" r="80" />
+        </svg>
+      </div>
+      <!-- End SVG Image for filter #goo -->
     </v-footer>
   </v-app>
 </template>
@@ -111,6 +138,7 @@ export default {
       disconnectText: "You are logged out.",
       timeout: 2000,
       loginIn: false,
+      drawer: true,
     };
   },
   computed: {
@@ -151,4 +179,36 @@ export default {
   height: 10px;
   display: flex;
 }
+
+// листочок початок LOGO
+.d38 {
+  width: 1.25em;
+  height: 1.25em;
+  margin: 1em 1.5em 2.5em;
+  border-radius: 100% 0;
+  background: #32336b;
+  box-shadow: -1.5em 1.5em #32336b;
+  position: relative;
+}
+.d38:before,
+.d38:after {
+  content: "";
+  width: 1.25em;
+  height: 1.25em;
+  margin: 0.5em 1.5em;
+  border-radius: 0 100%;
+  background: #32336b;
+  position: absolute;
+  left: -3em;
+  top: -0.5em;
+  box-shadow: 1.5em 1.5em #32336b;
+  transform-origin: 1.375em 1.375em;
+}
+.d38:before {
+  transform: rotate(-30deg);
+}
+.d38:after {
+  transform: rotate(30deg);
+}
+// Листочок кінець
 </style>

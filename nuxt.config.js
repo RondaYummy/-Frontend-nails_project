@@ -4,7 +4,7 @@ import config from 'config'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - frontend_nails_project',
+    titleTemplate: '%s',
     title: 'frontend_nails_project',
     htmlAttrs: {
       lang: 'en'
@@ -93,12 +93,16 @@ export default {
           name: '/registration',
           path: '/registration',
           component: resolve(__dirname, 'components/registration.vue'),
-
         }),
         routes.push({
           name: '/salon',
           path: '/salon',
           component: resolve(__dirname, 'components/salon_profile.vue')
+        }),
+        routes.push({
+          name: '/panel',
+          path: '/panel',
+          component: resolve(__dirname, 'components/panel.vue')
         })
     },
 

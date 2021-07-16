@@ -15,7 +15,11 @@
         </v-chip>
       </template>
 
-      <v-sheet class="text-center auth-main" height="500px" @keydown.esc="close">
+      <v-sheet
+        class="text-center auth-main"
+        height="500px"
+        @keydown.esc="close"
+      >
         <v-btn
           class="mt-6 mb-6 text-h6"
           elevation="2"
@@ -53,7 +57,8 @@
                     @blur="$v.email.$touch()"
                     @keydown.enter="signIn"
                     required
-                  ></v-text-field>
+                  >
+                  </v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
@@ -69,14 +74,16 @@
                     required
                     loading
                     @keydown.enter="signIn"
-                    ><template v-slot:progress>
+                  >
+                    <template v-slot:progress>
                       <v-progress-linear
                         :value="progress"
                         :color="color"
                         absolute
                         height="7"
-                      ></v-progress-linear> </template
-                  ></v-text-field>
+                      ></v-progress-linear>
+                    </template>
+                  </v-text-field>
                 </v-col>
               </v-row>
               <h2

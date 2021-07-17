@@ -15,7 +15,6 @@
               <nuxt-link class="black__btn" to="#">Записатись</nuxt-link>
             </div>
           </form>
-          <bottom-arrow />
         </section>
         <p>
           «Ніколи не забувайте про манікюр.Руки — перше, що кидається в очі
@@ -28,7 +27,7 @@
           <span>Мої Проекти</span>
         </a>
         <hr class="my-3" />
-    <about-the-system />
+        <about-the-system />
 
         <div class="services__main_block">
           <section class="main_services">
@@ -42,14 +41,16 @@
             <main_services />
           </section>
           <v-btn
-            class="ma-2"
+            class="btn btn-1"
             :loading="loading"
             :disabled="loading"
-            outlined
-            large
-            width="200"
+            width="180"
+            height="50"
             @click="getMoreServices"
           >
+            <svg>
+              <rect x="0" y="0" fill="none" width="100%" height="100%" />
+            </svg>
             Знайти більше
           </v-btn>
         </div>
@@ -62,14 +63,12 @@
       description="Lorem reprehenderit perferendis, aspernatur, minus sapiente reiciendis doloremque vel blanditiis? Libero quos voluptatum totam reprehenderit nobis recusandae soluta!"
       name="Name card"
     /> -->
-
   </main>
 </template>
 
 <script>
 import main_services from "../components/main_services.vue";
 import aboutTheSystem from "../components/additional/aboutTheSystem.vue";
-
 
 import card from "../components/card_createEdit.vue";
 export default {
@@ -105,6 +104,83 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
+//colors button
+$white: #ffffff;
+$black: rgb(0, 0, 0);
+
+//base styles
+
+* {
+  box-sizing: inherit;
+  transition-property: all;
+  transition-duration: 0.6s;
+  transition-timing-function: ease;
+}
+
+//default button
+.btn {
+  color: black;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 45px;
+  margin: 0 0 2em;
+  max-width: 180px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+
+  @media (min-width: 600px) {
+    margin: 0 1em 2em;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+//button one
+///////////////////////////////
+.btn-1 {
+  background: darken($white, 1.5%);
+  font-weight: 100;
+
+  svg {
+    height: 50px;
+    left: -10;
+    position: absolute;
+    top: -10;
+    width: 180px;
+  }
+
+  rect {
+    fill: none;
+    stroke: $black;
+    stroke-width: 2;
+
+    stroke-dasharray: 422, 0;
+    transition: all 0.35s linear;
+    stroke-linecap: round;
+  }
+}
+
+.btn-1:hover {
+  background: rgba($white, 0);
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  rect {
+    stroke-width: 2;
+    stroke-dasharray: 15, 310;
+    stroke-dashoffset: 48;
+    transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+}
+// end button
+
 .mainContainer {
   height: 100%;
   display: flex;
@@ -328,7 +404,7 @@ export default {
 
   h1:hover::after {
     width: 100%;
-    margin-left: -52%;
+    margin-left: -50%;
   }
 
   form {

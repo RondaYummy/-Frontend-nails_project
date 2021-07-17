@@ -402,7 +402,7 @@ export default {
     menu: false,
     show1: false,
     show2: false,
-    title: 'Nikki - Nails | Registration',
+    title: "Nikki - Nails | Registration",
     errorMessage: "",
   }),
 
@@ -431,12 +431,18 @@ export default {
             TermsOfServiceAndPrivacyPolicy: this.TermsOfServiceAndPrivacyPolicy,
           })
           .then(() => {
-            api.login({
-              email: this.email,
-              password: this.password,
-            });
-            this.$router.push("/");
+            api
+              .login({
+                email: this.email,
+                password: this.password,
+              })
+              .then((response) => {
+                this.errorMessage = "";
+                this.$store.commit("user/add", response.data.user);
+                this.$router.push("/");
+              });
           })
+
           .catch((error) => {
             this.errorMessage = error.response.data || error.message;
           });
@@ -580,7 +586,7 @@ export default {
       return errors;
     },
   },
-    head() {
+  head() {
     return {
       title: this.title,
       meta: [

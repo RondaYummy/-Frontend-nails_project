@@ -108,16 +108,22 @@
               @click="confirmPersonalInfo"
             ></v-text-field>
 
-            <v-text-field
-              v-model="phone"
-              :error-messages="phoneErrors"
-              label="Phone"
-              required
-              @input="$v.phone.$touch()"
-              @blur="$v.phone.$touch()"
-              @click="confirmPersonalInfo"
-              placeholder="(__) ___ __ __"
-            ></v-text-field>
+            <div class="input-group">
+              <span class="input-group-addon"><span>+38</span></span>
+              <input
+                type="tel"
+                v-model="phone"
+                name="phone"
+                id="phone"
+                placeholder="(555) 555-55-55"
+                autocomplete="tel"
+                maxlength="15"
+                class="form-control"
+                v-phone
+                pattern="[(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
+                required
+              />
+            </div>
 
             <v-select
               v-model="gender"
@@ -381,6 +387,29 @@ export default {
       val && setTimeout(() => (this.activePicker = "YEAR"));
     },
   },
+  directives: {
+    phone: function (el) {
+      el.oninput = function (e) {
+        if (!e.isTrusted) {
+          return;
+        }
+
+        const x = this.value
+          .replace(/\D/g, "")
+          .match(/(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+        this.phone = x[0];
+        this.value = !x[2]
+          ? x[1]
+          : "(" +
+            x[1] +
+            ") " +
+            x[2] +
+            (x[3] ? "-" + x[3] : "") +
+            (x[4] ? "-" + x[4] : "");
+        el.dispatchEvent(new Event("input"));
+      };
+    },
+  },
   data: () => ({
     step: 1,
     email: "",
@@ -412,7 +441,6 @@ export default {
       this.errorMessage = "";
     },
     save(date) {
-      // method for date input
       this.$refs.menu.save(date);
     },
     async submit() {
@@ -603,6 +631,71 @@ export default {
 </script>
 
 <style scoped>
+.input-group-addon {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  color: #555;
+  text-align: center;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-group .form-control {
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: 100%;
+  margin-bottom: 0;
+}
+.input-group-addon,
+.input-group-btn {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+  margin-top: 1.2rem;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  margin-left: -5px;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%),
+    0 0 8px rgb(102 175 233 / 60%);
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+}
+.input-group .form-control,
+.input-group-addon,
+.input-group-btn {
+  display: table-cell;
+}
+/* phone */
 .ifError {
   border: 1px solid red;
   box-shadow: inset 1em 0.2em 0.2em red;

@@ -174,7 +174,7 @@ $black: rgb(0, 0, 0);
 
   rect {
     stroke-width: 2;
-    stroke-dasharray: 15, 310;
+    stroke-dasharray: 25, 330;
     stroke-dashoffset: 48;
     transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
   }

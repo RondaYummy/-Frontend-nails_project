@@ -2,10 +2,9 @@
   <v-app light>
     <v-app-bar fixed app height="80px">
       <div class="d38"></div>
-
-      <nuxt-link to="/" class="tittle"
-        ><v-toolbar-title v-text="title"
-      /></nuxt-link>
+      <nuxt-link to="/" class="tittle">
+        <v-toolbar-title v-text="title" />
+      </nuxt-link>
       <v-row>
         <authComponent />
         <nuxt-link to="/registration">
@@ -85,9 +84,10 @@
       <nuxt />
       <!-- </v-container> -->
     </v-main>
+    <liked-the-system />
 
-    <v-footer :absolute="!fixed" app>
-      <span>&copy;2021 &mdash; {{ new Date().getFullYear() }}</span>
+    <v-footer :absolute="!fixed" app class="footer">
+      <span> &copy;2021 &mdash; {{ new Date().getFullYear() }} </span>
       <span>
         <span>«Nikki - Nails»</span> – персоналізований комплекс послуг для
         ідеального образу
@@ -123,9 +123,11 @@
 <script>
 import authComponent from "../components/authorization.vue";
 import api from "../plugins/api";
+import likedTheSystem from "../components/additional/likedTheSystem.vue";
 
 export default {
   components: {
+    likedTheSystem,
     authComponent,
   },
   data() {
@@ -211,4 +213,11 @@ export default {
   transform: rotate(30deg);
 }
 // Листочок кінець
+
+// footer
+.footer {
+  margin-top: auto;
+  padding: 20px 0;
+  background: #e4e5eb;
+}
 </style>

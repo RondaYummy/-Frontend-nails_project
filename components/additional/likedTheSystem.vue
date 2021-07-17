@@ -5,7 +5,7 @@
       <h2>Створи красу разом із нами!</h2>
     </div>
     <div class="info__section_right">
-      <button class="button">Створити аккаунт</button>
+      <button class="button" @click="$router.push('/registration')">Створити аккаунт</button>
     </div>
   </section>
 </template>
@@ -21,8 +21,8 @@ export default {};
   -ms-flex-pack: center;
   justify-content: center;
   align-items: center;
-  padding: 75px 30px 130px 30px;
-  height: 250px;
+  padding: 75px 30px 80px 30px;
+  height: 220px;
   background-image: -webkit-gradient(
     linear,
     left top,

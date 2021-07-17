@@ -63,17 +63,20 @@
       description="Lorem reprehenderit perferendis, aspernatur, minus sapiente reiciendis doloremque vel blanditiis? Libero quos voluptatum totam reprehenderit nobis recusandae soluta!"
       name="Name card"
     /> -->
+    <liked-the-system />
   </main>
 </template>
 
 <script>
 import main_services from "../components/main_services.vue";
 import aboutTheSystem from "../components/additional/aboutTheSystem.vue";
+import likedTheSystem from "../components/additional/likedTheSystem.vue";
 
 import card from "../components/card_createEdit.vue";
 export default {
   components: {
     main_services,
+    likedTheSystem,
     aboutTheSystem,
     card,
   },

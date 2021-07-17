@@ -84,7 +84,6 @@
       <nuxt />
       <!-- </v-container> -->
     </v-main>
-    <liked-the-system />
 
     <v-footer :absolute="!fixed" app class="footer">
       <span> &copy;2021 &mdash; {{ new Date().getFullYear() }} </span>
@@ -182,7 +181,7 @@ export default {
   display: flex;
 }
 
-// листочок початок LOGO
+// start листочок LOGO
 .d38 {
   width: 1.25em;
   height: 1.25em;
@@ -212,12 +211,13 @@ export default {
 .d38:after {
   transform: rotate(30deg);
 }
-// Листочок кінець
+// Листочок end
 
-// footer
+// start footer
 .footer {
   margin-top: auto;
-  padding: 20px 0;
+  padding: 20px;
   background: #e4e5eb;
 }
+// end footer
 </style>

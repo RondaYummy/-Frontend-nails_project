@@ -3,7 +3,7 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="12" md="10">
         <section class="main-section mainContainer">
-          <div class="d38"></div>
+         
           <h1 class="animated-word">Nikki-Nails</h1>
 
           <form>
@@ -30,7 +30,9 @@
         <about-the-system />
 
         <div class="services__main_block">
+            <h3 class="text_tittle">Станьте привабливіші</h3>
           <section class="main_services">
+              
             <main_services />
             <main_services />
             <main_services />
@@ -56,13 +58,14 @@
         </div>
       </v-col>
     </v-row>
-
+<gallery-main />
     <!-- <card
       price="111"
       image="imagesss"
       description="Lorem reprehenderit perferendis, aspernatur, minus sapiente reiciendis doloremque vel blanditiis? Libero quos voluptatum totam reprehenderit nobis recusandae soluta!"
       name="Name card"
     /> -->
+
     <liked-the-system />
   </main>
 </template>
@@ -71,6 +74,7 @@
 import main_services from "../components/main_services.vue";
 import aboutTheSystem from "../components/additional/aboutTheSystem.vue";
 import likedTheSystem from "../components/additional/likedTheSystem.vue";
+import galleryMain from '../components/additional/galleryMain.vue';
 
 import card from "../components/card_createEdit.vue";
 export default {
@@ -78,6 +82,7 @@ export default {
     main_services,
     likedTheSystem,
     aboutTheSystem,
+    galleryMain,
     card,
   },
   data: () => ({
@@ -199,7 +204,7 @@ $black: rgb(0, 0, 0);
   color: #0d0d0e97;
   cursor: pointer;
   max-width: 600px;
-  margin-top: 20px;
+  margin-top: 7rem;
   background-color: rgba(245, 245, 245, 0.6);
   margin-bottom: 20px;
   width: 100%;
@@ -366,10 +371,25 @@ $black: rgb(0, 0, 0);
   flex-direction: column;
   align-items: center;
 }
+   .text_tittle {
+    margin: 0 auto;
+    border-bottom: 1px solid #000;
+    text-align: center;
+    margin-bottom: 3.5rem;
+    text-transform: uppercase;
+    font-family: "Playfair Display", serif;
+    letter-spacing: 1px;
+    width: 550px;
+    font-size: 40px;
+    font-weight: 400;
+    color: #000;
+    line-height: 60px;
+  }
 .main_services {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+
 }
 
 .main-section {
@@ -412,7 +432,6 @@ $black: rgb(0, 0, 0);
 
   form {
     display: flex;
-    // margin-bottom: 5rem;
   }
 }
 .main-section::after {
@@ -425,37 +444,4 @@ $black: rgb(0, 0, 0);
   position: absolute;
   z-index: 1;
 }
-
-// листочок початок LOGO
-.d38 {
-  width: 2.5em;
-  height: 2.5em;
-  margin: 2em 4.5em 4em;
-  border-radius: 100% 0;
-  background: #32336b;
-  box-shadow: -3em 3em #32336b;
-  position: relative;
-  left: 2em;
-}
-.d38:before,
-.d38:after {
-  content: "";
-  width: 2.5em;
-  height: 2.5em;
-  margin: 1em 3em;
-  border-radius: 0 100%;
-  background: #32336b;
-  position: absolute;
-  left: -6em;
-  top: -1em;
-  box-shadow: 3em 3em #32336b;
-  transform-origin: 2.75em 2.75em;
-}
-.d38:before {
-  transform: rotate(-30deg);
-}
-.d38:after {
-  transform: rotate(30deg);
-}
-// Листочок кінець
 </style>

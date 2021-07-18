@@ -100,10 +100,21 @@ export default {
           component: resolve(__dirname, 'components/salon_profile.vue')
         }),
         routes.push({
-          name: '/for_business_and_clients',
-          path: '/for_business_and_clients',
-          pages: resolve(__dirname, 'pages/for_business_and_clients.vue')
+          name: '/for_business',
+          path: '/for_business',
+          pages: resolve(__dirname, 'pages/aboutTheSystem/for_business.vue')
+        }),
+        routes.push({
+          name: '/for_masters',
+          path: '/for_masters',
+          pages: resolve(__dirname, 'pages/aboutTheSystem/for_masters.vue')
+        }),
+        routes.push({
+          name: '/for_clients',
+          path: '/for_clients',
+          pages: resolve(__dirname, 'pages/aboutTheSystem/for_clients.vue')
         })
+        
     },
 
   }

@@ -63,6 +63,13 @@
         <v-toolbar-title v-text="title" />
       </nuxt-link>
       <v-row>
+        <authComponent />
+        <nuxt-link to="/registration">
+          <v-chip class="ma-2" color="primary" outlined pill>
+            Registration
+            <v-icon right> mdi-account-outline </v-icon>
+          </v-chip></nuxt-link
+        >
         <nuxt-link to="/salon">
           <v-chip class="ma-2" color="indigo darken-3" outlined>
             <v-icon left> mdi-fire </v-icon>
@@ -73,7 +80,6 @@
       </v-row>
 
       <v-spacer />
-      <authComponent v-if="!loginIn" />
       <v-badge
         :content="messages"
         :value="messages"
@@ -263,7 +269,6 @@ export default {
 }
 .app-bar {
   padding-left: 13px;
-  padding-right: 33px;
 }
 
 .awatar_main {

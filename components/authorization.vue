@@ -2,19 +2,13 @@
   <div class="text-center">
     <v-bottom-sheet v-model="sheet" inset>
       <template v-slot:activator="{ on, attrs }">
-        <v-chip
-          class="ma-2"
-          color="success"
-          outlined
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          <v-icon left> mdi-server-plus </v-icon>
-          Authorization
-        </v-chip>
+        <button class="unUser-open" v-bind="attrs" v-on="on">
+          <div class="unUser-img">
+            <v-icon>mdi-account-circle</v-icon>
+          </div>
+          <span>Вхід або реєстрація</span>
+        </button>
       </template>
-
       <v-sheet class="text-center auth-main main_block-style" height="500px">
         <p class="text-h6 font-weight-light mb-2">
           <span>
@@ -36,6 +30,8 @@
                     v-model="email"
                     label="E-mail"
                     clearable
+                    type="email"
+                    autocomplete="email"
                     :rules="emailRules"
                     @input="$v.email.$touch()"
                     @blur="$v.email.$touch()"
@@ -88,6 +84,19 @@
               </v-btn>
             </v-container>
           </v-form>
+
+          <div class="registration_block">
+            <span
+              >У вас ще немає акаунту? Зареєструйте прямо зараз
+              <v-icon>mdi-account-check</v-icon>
+            </span>
+            <button class="unUser-open" @click="goToRegistration">
+              <div class="unUser-img">
+                <v-icon>mdi-account-outline</v-icon>
+              </div>
+              <span>Зареєструватись</span>
+            </button>
+          </div>
         </div>
       </v-sheet>
     </v-bottom-sheet>
@@ -146,6 +155,10 @@ export default {
     },
   },
   methods: {
+    goToRegistration() {
+      this.sheet = false;
+      this.$router.push("/registration");
+    },
     signIn() {
       this.loader = "loading";
       this.$v.$touch();
@@ -185,6 +198,49 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.registration_block{
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.unUser-open:hover{
+  background: rgba(25, 52, 58, 0.16);
+}
+.unUser-open {
+  cursor: pointer;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 245px;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 8px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  -webkit-transition: background-color 300ms ease;
+  -o-transition: background-color 300ms ease;
+  transition: background-color 300ms ease;
+  .unUser-img {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: rgba(25, 52, 58, 0.16);
+  }
+  span {
+    text-decoration: none;
+  }
+}
+// auth button
 .errorMessage {
   color: red;
   text-shadow: 0.5px 0.5px 0.5px black;

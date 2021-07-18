@@ -14,7 +14,7 @@
             <br />
             з Nikki - Nails
           </p>
-          <nuxt-link to="/for_business_and_clients"> Детальніше </nuxt-link>
+          <nuxt-link to="/aboutTheSystem/for_business"> Детальніше </nuxt-link>
         </div>
       </li>
       <li class="aboutTheSystem__item">
@@ -29,7 +29,7 @@
               та майстрів</b
             >
           </p>
-          <nuxt-link to="/for_business_and_clients"> Детальніше </nuxt-link>
+          <nuxt-link to="/aboutTheSystem/for_masters"> Детальніше </nuxt-link>
         </div>
       </li>
       <li class="aboutTheSystem__item">
@@ -38,7 +38,7 @@
         </div>
         <div class="aboutTheSystem__item_right">
           <p>Зручність для твоїх клієнтів та майстрів</p>
-          <nuxt-link to="/for_business_and_clients"> Детальніше </nuxt-link>
+          <nuxt-link to="/aboutTheSystem/for_clients"> Детальніше </nuxt-link>
         </div>
       </li>
     </ul>

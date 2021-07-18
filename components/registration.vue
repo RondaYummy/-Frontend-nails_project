@@ -16,6 +16,7 @@
           <v-text-field
             v-model="email"
             :error-messages="emailErrors"
+            autocomplete="email"
             label="E-mail"
             required
             @input="$v.email.$touch()"
@@ -108,23 +109,17 @@
               @click="confirmPersonalInfo"
             ></v-text-field>
 
-            <div class="input-group">
-              <span class="input-group-addon"><span>+38</span></span>
-              <input
-                type="tel"
-                v-model="phone"
-                name="phone"
-                id="phone"
-                placeholder="(555) 555-55-55"
-                autocomplete="tel"
-                maxlength="15"
-                class="form-control"
-                v-phone
-                pattern="[(][0-9]{3}[)] [0-9]{3}-[0-9]{2}-[0-9]{2}"
-                required
-              />
-            </div>
-
+            <VuePhoneNumberInput
+              type="tel"
+              autocomplete="tel"
+              v-model="phone"
+              @update="updatePhone"
+              :error="phoneError"
+              maxlength="15"
+              default-country-code="UA"
+              clearable
+              required
+            />
             <v-select
               v-model="gender"
               :items="items"
@@ -358,8 +353,11 @@ import {
   sameAs,
 } from "vuelidate/lib/validators";
 import api from "../plugins/api";
-
+import VuePhoneNumberInput from "vue-phone-number-input";
 export default {
+  components: {
+    VuePhoneNumberInput,
+  },
   mixins: [validationMixin],
 
   validations: {
@@ -373,7 +371,6 @@ export default {
     },
     firstName: { required, maxLength: maxLength(16), minLength: minLength(3) },
     lastName: { required, maxLength: maxLength(16), minLength: minLength(3) },
-    phone: { required, maxLength: maxLength(10), minLength: minLength(10) },
     gender: { required },
     date: { required },
     TermsOfServiceAndPrivacyPolicy: {
@@ -385,29 +382,6 @@ export default {
   watch: {
     menu(val) {
       val && setTimeout(() => (this.activePicker = "YEAR"));
-    },
-  },
-  directives: {
-    phone: function (el) {
-      el.oninput = function (e) {
-        if (!e.isTrusted) {
-          return;
-        }
-
-        const x = this.value
-          .replace(/\D/g, "")
-          .match(/(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-        this.phone = x[0];
-        this.value = !x[2]
-          ? x[1]
-          : "(" +
-            x[1] +
-            ") " +
-            x[2] +
-            (x[3] ? "-" + x[3] : "") +
-            (x[4] ? "-" + x[4] : "");
-        el.dispatchEvent(new Event("input"));
-      };
     },
   },
   data: () => ({
@@ -433,9 +407,18 @@ export default {
     show2: false,
     title: "Nikki - Nails | Registration",
     errorMessage: "",
+    phoneError: true,
   }),
 
   methods: {
+    updatePhone(e) {
+      if (!e.isValid) {
+        this.phoneError = true;
+      }
+      if (e.isValid) {
+        this.phoneError = false;
+      }
+    },
     back() {
       this.step--;
       this.errorMessage = "";
@@ -498,7 +481,6 @@ export default {
       this.$v.lastName.$touch();
       this.$v.date.$touch();
       this.$v.gender.$touch();
-      this.$v.phone.$touch();
       this.$v.TermsOfServiceAndPrivacyPolicy.$touch();
 
       if (
@@ -506,7 +488,7 @@ export default {
         this.$v.lastName.$invalid ||
         this.$v.date.$invalid ||
         this.$v.gender.$invalid ||
-        this.$v.phone.$invalid ||
+        this.phoneError ||
         this.$v.TermsOfServiceAndPrivacyPolicy.$invalid
       ) {
         console.log("ERROR");
@@ -601,16 +583,6 @@ export default {
       !this.$v.lastName.minLength &&
         errors.push("The Last name must be at least 3 characters long");
       !this.$v.lastName.required && errors.push("Last name is required.");
-      return errors;
-    },
-    phoneErrors() {
-      const errors = [];
-      if (!this.$v.phone.$dirty) return errors;
-      !this.$v.phone.maxLength &&
-        errors.push("Phone must be at most 10 characters long");
-      !this.$v.phone.minLength &&
-        errors.push("The Phone must be at least 10 characters long");
-      !this.$v.phone.required && errors.push("Phone is required.");
       return errors;
     },
   },

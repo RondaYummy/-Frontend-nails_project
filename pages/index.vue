@@ -3,7 +3,6 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="12" md="10">
         <section class="main-section mainContainer">
-         
           <h1 class="animated-word">Nikki-Nails</h1>
 
           <form>
@@ -22,17 +21,17 @@
         </p>
         <div class="text-xs-right">
           <em><small>&mdash; Julia Restoin Roitfeld</small></em>
+          <a class="butn butn__new" href="#">
+            <span>Мої Проекти</span>
+          </a>
         </div>
-        <a class="butn butn__new" href="#">
-          <span>Мої Проекти</span>
-        </a>
+
         <hr class="my-3" />
         <about-the-system />
 
         <div class="services__main_block">
-            <h3 class="text_tittle">Станьте привабливіші</h3>
+          <h3 class="text_tittle">Станьте привабливіші</h3>
           <section class="main_services">
-              
             <main_services />
             <main_services />
             <main_services />
@@ -58,7 +57,7 @@
         </div>
       </v-col>
     </v-row>
-<gallery-main />
+    <gallery-main />
     <!-- <card
       price="111"
       image="imagesss"
@@ -74,7 +73,7 @@
 import main_services from "../components/main_services.vue";
 import aboutTheSystem from "../components/additional/aboutTheSystem.vue";
 import likedTheSystem from "../components/additional/likedTheSystem.vue";
-import galleryMain from '../components/additional/galleryMain.vue';
+import galleryMain from "../components/additional/galleryMain.vue";
 
 import card from "../components/card_createEdit.vue";
 export default {
@@ -371,25 +370,24 @@ $black: rgb(0, 0, 0);
   flex-direction: column;
   align-items: center;
 }
-   .text_tittle {
-    margin: 0 auto;
-    border-bottom: 1px solid #000;
-    text-align: center;
-    margin-bottom: 3.5rem;
-    text-transform: uppercase;
-    font-family: "Playfair Display", serif;
-    letter-spacing: 1px;
-    width: 550px;
-    font-size: 40px;
-    font-weight: 400;
-    color: #000;
-    line-height: 60px;
-  }
+.text_tittle {
+  margin: 0 auto;
+  border-bottom: 1px solid #000;
+  text-align: center;
+  margin-bottom: 3.5rem;
+  text-transform: uppercase;
+  font-family: "Playfair Display", serif;
+  letter-spacing: 1px;
+  width: 550px;
+  font-size: 40px;
+  font-weight: 400;
+  color: #000;
+  line-height: 60px;
+}
 .main_services {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
 }
 
 .main-section {

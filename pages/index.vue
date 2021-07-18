@@ -124,6 +124,7 @@ $black: rgb(0, 0, 0);
   transition-property: all;
   transition-duration: 0.6s;
   transition-timing-function: ease;
+  
 }
 
 //default button

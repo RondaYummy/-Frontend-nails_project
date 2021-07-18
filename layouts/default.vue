@@ -1,6 +1,63 @@
 <template>
   <v-app light>
-    <v-app-bar fixed app height="80px">
+    <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant="miniVariant"
+      :clipped="clipped"
+      bottom
+      fixed
+      mini-variant-width="74px"
+      class="nav-drawer"
+      permanent
+    >
+      <!-- 
+  temporary - затемнення та показ поверх вікон
+  bottom - для мобільних телефонів відображенн знизу?
+  absolute/fixed - позиція меню
+  permanent - показувати при запуску сторінки
+-->
+      <v-list>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+            @click.stop="miniVariant = !miniVariant"
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar :clipped-left="clipped" fixed app height="80px" class="app-bar">
+      <!-- navigation icon for nav drawer -->
+      <v-app-bar-nav-icon
+        v-if="miniVariant"
+        @click.stop="miniVariant = !miniVariant"
+        class="navIcons"
+      />
+
+      <v-btn
+        icon
+        v-if="!miniVariant"
+        @click.stop="miniVariant = !miniVariant"
+        class="navIcons"
+      >
+        <v-icon>mdi-account-arrow-left </v-icon>
+      </v-btn>
+      <!-- navigation icon for nav drawer -->
       <div class="d38"></div>
       <nuxt-link to="/" class="tittle">
         <v-toolbar-title v-text="title" />
@@ -139,7 +196,23 @@ export default {
       disconnectText: "You are logged out.",
       timeout: 2000,
       loginIn: false,
-      drawer: true,
+
+      clipped: true,
+      drawer: false,
+      group: null,
+      miniVariant: true,
+      items: [
+        {
+          icon: "mdi-apps",
+          title: "Welcome",
+          to: "/",
+        },
+        {
+          icon: "mdi-chart-bubble",
+          title: "Inspire",
+          to: "/inspire",
+        },
+      ],
     };
   },
   computed: {
@@ -150,6 +223,9 @@ export default {
   watch: {
     user: function () {
       this.loginIn = true;
+    },
+    group() {
+      this.drawer = false;
     },
   },
   methods: {
@@ -169,6 +245,32 @@ export default {
 * {
   text-decoration: none;
 }
+.navIcons {
+  position: absolute;
+  top: 50%;
+  padding: 20px;
+  width: 24px;
+  height: 24px;
+  left: 12px;
+  border-radius: 50%;
+  color: rgba(25, 52, 58, 0.64);
+  z-index: 1400;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transition: color 300ms ease, background 300ms ease;
+  -o-transition: color 300ms ease, background 300ms ease;
+  transition: color 300ms ease, background 300ms ease;
+}
+.nav-drawer {
+  padding-top: 5rem;
+  background: #19343a;
+  color: rgba(255, 255, 255, 0.64);
+}
+.app-bar {
+  padding-left: 13px;
+}
+
 .awatar_main {
   margin: 30px;
 }
@@ -185,7 +287,7 @@ export default {
 .d38 {
   width: 1.25em;
   height: 1.25em;
-  margin: 1em 1.5em 2.5em;
+  margin: 1em 1.5em 2.5em 6em;
   border-radius: 100% 0;
   background: #32336b;
   box-shadow: -1.5em 1.5em #32336b;

@@ -1,12 +1,10 @@
 <template>
   <section class="main_section_page">
-    <h1>Для твого бізнесу</h1>
+    <h1>Для твого майстра</h1>
     <section class="navigation_section">
       <div class="row_navigation_menu">
         <a class="glitch-btn" href="#" target="_blank">
-          <div class="text">
-            Довірте це нам<span class="hidden"> </span>
-          </div>
+          <div class="text">Довірте це нам<span class="hidden"> </span></div>
 
           <div class="mask mask1">
             <span>Довірте це нам</span>
@@ -36,7 +34,7 @@
           </div>
         </a>
       </div>
-            <div class="row_navigation_menu">
+      <div class="row_navigation_menu">
         <a class="glitch-btn" href="#" target="_blank">
           <div class="text">
             Навіщо це вам<span class="hidden">&nbsp;</span>
@@ -68,11 +66,11 @@ export default {};
   display: flex;
   flex-direction: column;
   margin-left: 3.4rem;
-  background-color: white ;
+  background-color: white;
   .row_navigation_menu {
     margin-top: 0.5rem;
   }
-  .row_navigation_menu:nth-last-child(1){
+  .row_navigation_menu:nth-last-child(1) {
     margin-left: 0.1rem;
   }
 }

@@ -1,63 +1,6 @@
 <template>
   <v-app light>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      bottom
-      fixed
-      mini-variant-width="74px"
-      class="nav-drawer"
-      permanent
-    >
-      <!-- 
-  temporary - затемнення та показ поверх вікон
-  bottom - для мобільних телефонів відображенн знизу?
-  absolute/fixed - позиція меню
-  permanent - показувати при запуску сторінки
--->
-      <v-list>
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-4"
-        >
-          <v-list-item
-            v-for="(item, i) in items"
-            :key="i"
-            :to="item.to"
-            router
-            exact
-            @click.stop="miniVariant = !miniVariant"
-          >
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              <v-list-item-title v-text="item.title" />
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar :clipped-left="clipped" fixed app height="80px" class="app-bar">
-      <!-- navigation icon for nav drawer -->
-      <v-app-bar-nav-icon
-        v-if="miniVariant"
-        @click.stop="miniVariant = !miniVariant"
-        class="navIcons"
-      />
-
-      <v-btn
-        icon
-        v-if="!miniVariant"
-        @click.stop="miniVariant = !miniVariant"
-        class="navIcons"
-      >
-        <v-icon>mdi-account-arrow-left </v-icon>
-      </v-btn>
-      <!-- navigation icon for nav drawer -->
+    <v-app-bar fixed app height="80px" class="app-bar">
       <div class="d38"></div>
       <nuxt-link to="/" class="tittle">
         <v-toolbar-title v-text="title" />
@@ -139,7 +82,7 @@
     <v-footer :absolute="!fixed" app class="footer">
       <span> &copy;2021 &mdash; {{ new Date().getFullYear() }} </span>
       <span>
-        <span>«Nikki - Nails»</span> – персоналізований комплекс послуг для
+        <span>«{{ title }}»</span> – персоналізований комплекс послуг для
         ідеального образу
       </span>
       <!-- Start SVG Image for filter #goo -->
@@ -183,30 +126,13 @@ export default {
   data() {
     return {
       fixed: false,
-      title: "Nikki - Nails",
+      title: "NIKKI - ROOM",
       messages: 66,
       show: false,
       snackbar: false,
       disconnectText: "You are logged out.",
       timeout: 2000,
       loginIn: false,
-
-      clipped: true,
-      drawer: false,
-      group: null,
-      miniVariant: true,
-      items: [
-        {
-          icon: "mdi-apps",
-          title: "Welcome",
-          to: "/",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Inspire",
-          to: "/inspire",
-        },
-      ],
     };
   },
   computed: {

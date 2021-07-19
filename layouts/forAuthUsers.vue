@@ -9,6 +9,7 @@
       mini-variant-width="74px"
       class="nav-drawer"
       permanent
+      app
     >
       <!-- 
   temporary - затемнення та показ поверх вікон
@@ -63,13 +64,6 @@
         <v-toolbar-title v-text="title" />
       </nuxt-link>
       <v-row>
-        <authComponent />
-        <nuxt-link to="/registration">
-          <v-chip class="ma-2" color="primary" outlined pill>
-            Registration
-            <v-icon right> mdi-account-outline </v-icon>
-          </v-chip></nuxt-link
-        >
         <nuxt-link to="/salon">
           <v-chip class="ma-2" color="indigo darken-3" outlined>
             <v-icon left> mdi-fire </v-icon>
@@ -145,7 +139,7 @@
     <v-footer :absolute="!fixed" app class="footer">
       <span> &copy;2021 &mdash; {{ new Date().getFullYear() }} </span>
       <span>
-        <span>«Nikki - Nails»</span> – персоналізований комплекс послуг для
+        <span>«{{ title }}»</span> – персоналізований комплекс послуг для
         ідеального образу
       </span>
       <!-- Start SVG Image for filter #goo -->
@@ -189,7 +183,7 @@ export default {
   data() {
     return {
       fixed: false,
-      title: "Nikki - Nails",
+      title: "NIKKI - ROOM",
       messages: 66,
       show: false,
       snackbar: false,
@@ -205,12 +199,12 @@ export default {
         {
           icon: "mdi-apps",
           title: "Welcome",
-          to: "/",
+          to: "#",
         },
         {
           icon: "mdi-chart-bubble",
           title: "Inspire",
-          to: "/inspire",
+          to: "#",
         },
       ],
     };
@@ -269,6 +263,7 @@ export default {
 }
 .app-bar {
   padding-left: 13px;
+  padding-right: 33px;
 }
 
 .awatar_main {

@@ -3,7 +3,7 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="12" md="10">
         <section class="main-section mainContainer">
-          <h1 class="animated-word">Nikki-Nails</h1>
+          <h1 class="animated-word">NIKKI-ROOM</h1>
 
           <form>
             <div class="step__footer">
@@ -19,11 +19,9 @@
           «Ніколи не забувайте про манікюр.Руки — перше, що кидається в очі
           після вашого лиця»
         </p>
+        \
         <div class="text-xs-right">
           <em><small>&mdash; Julia Restoin Roitfeld</small></em>
-          <a class="butn butn__new" href="#">
-            <span>Мої Проекти</span>
-          </a>
         </div>
 
         <hr class="my-3" />
@@ -58,13 +56,6 @@
       </v-col>
     </v-row>
     <gallery-main />
-    <!-- <card
-      price="111"
-      image="imagesss"
-      description="Lorem reprehenderit perferendis, aspernatur, minus sapiente reiciendis doloremque vel blanditiis? Libero quos voluptatum totam reprehenderit nobis recusandae soluta!"
-      name="Name card"
-    /> -->
-
     <liked-the-system />
   </main>
 </template>
@@ -75,18 +66,16 @@ import aboutTheSystem from "../components/additional/aboutTheSystem.vue";
 import likedTheSystem from "../components/additional/likedTheSystem.vue";
 import galleryMain from "../components/additional/galleryMain.vue";
 
-import card from "../components/card_createEdit.vue";
 export default {
   components: {
     main_services,
     likedTheSystem,
     aboutTheSystem,
     galleryMain,
-    card,
   },
   data: () => ({
     loading: false,
-    title: "Nikki - Nails",
+    title: "NIKKI - ROOM",
   }),
   methods: {
     getMoreServices() {
@@ -124,7 +113,6 @@ $black: rgb(0, 0, 0);
   transition-property: all;
   transition-duration: 0.6s;
   transition-timing-function: ease;
-  
 }
 
 //default button
@@ -201,6 +189,7 @@ $black: rgb(0, 0, 0);
   font-weight: 600;
   font-size: 100px;
   text-align: center;
+  text-transform: uppercase;
   color: #0d0d0e97;
   cursor: pointer;
   max-width: 600px;
@@ -220,88 +209,6 @@ $black: rgb(0, 0, 0);
   text-shadow: 0 0 1px white;
   outline-offset: 300px;
 }
-// Start butn
-.butn {
-  position: relative;
-
-  display: inline-flex;
-  padding: 0.5rem 1rem;
-  margin-right: 13px;
-  overflow: hidden;
-
-  transition: all 0.3s ease-in-out;
-  text-decoration: none;
-  text-transform: uppercase;
-
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  background-color: #3e3e3e;
-  background-image: linear-gradient(90deg, #3e3e3e, #3e3e3e);
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-}
-.butn::before {
-  position: absolute;
-  top: -50px;
-
-  width: 50px;
-  height: 155px;
-
-  content: "";
-  transition: all 3000ms cubic-bezier(0.19, 1, 0.22, 1);
-  transform: rotate(35deg);
-
-  opacity: 0;
-  background: #fff;
-}
-.butn::after {
-  position: absolute;
-  top: -50px;
-
-  width: 3rem;
-  height: 10rem;
-
-  content: "";
-  transition: all 3000ms cubic-bezier(0.19, 1, 0.22, 1);
-  transform: rotate(35deg);
-
-  opacity: 0;
-  background: #fff;
-}
-.butn__new::before {
-  left: -50%;
-}
-
-.butn__new::after {
-  left: -100%;
-}
-
-.butn:hover,
-.butn:active {
-  transform: translateY(-3px);
-
-  color: #fff;
-  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
-}
-
-.butn__new:hover::before {
-  left: 120%;
-
-  opacity: 0.5s;
-}
-
-.butn__new:hover::after {
-  left: 200%;
-
-  opacity: 0.6;
-}
-.butn span {
-  z-index: 20;
-}
-// End butn
-
 // Black btn
 .step__footer {
   display: flex;

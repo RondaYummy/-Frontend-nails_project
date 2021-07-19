@@ -12,9 +12,9 @@
           <p>
             Перетвори свій салон разом
             <br />
-            з Nikki - Nails
+            з {{title}}
           </p>
-          <nuxt-link to="/aboutTheSystem/for_business"> Детальніше </nuxt-link>
+          <nuxt-link to="/for_business"> Детальніше </nuxt-link>
         </div>
       </li>
       <li class="aboutTheSystem__item">
@@ -23,13 +23,13 @@
         </div>
         <div class="aboutTheSystem__item_right">
           <p>
-            Nikki - Nails для
+            {{title}} для
             <b>
               салонів <br />
               та майстрів</b
             >
           </p>
-          <nuxt-link to="/aboutTheSystem/for_masters"> Детальніше </nuxt-link>
+          <nuxt-link to="/for_masters"> Детальніше </nuxt-link>
         </div>
       </li>
       <li class="aboutTheSystem__item">
@@ -38,7 +38,7 @@
         </div>
         <div class="aboutTheSystem__item_right">
           <p>Зручність для твоїх клієнтів та майстрів</p>
-          <nuxt-link to="/aboutTheSystem/for_clients"> Детальніше </nuxt-link>
+          <nuxt-link to="/for_clients"> Детальніше </nuxt-link>
         </div>
       </li>
     </ul>
@@ -46,11 +46,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      title: "NIKKI - ROOM",
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 section {
   max-width: 78rem;
   padding-top: 15px;

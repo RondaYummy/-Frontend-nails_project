@@ -9,7 +9,6 @@
       mini-variant-width="74px"
       class="nav-drawer"
       permanent
-      app
     >
       <!-- 
   temporary - затемнення та показ поверх вікон

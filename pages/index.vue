@@ -1,7 +1,7 @@
 <template>
   <main>
     <v-row justify="center" align="center">
-      <v-col cols="12" sm="12" md="10">
+      <v-col cols="12" sm="12" md="12">
         <section class="main-section mainContainer">
           <h1 class="animated-word">NIKKI-ROOM</h1>
 
@@ -14,12 +14,42 @@
               <nuxt-link class="black__btn" to="#">Записатись</nuxt-link>
             </div>
           </form>
+          <form class="sign-up-online">
+            <h2 class="sign-up-online__tittle">Записатись онлайн</h2>
+            <v-row>
+              <v-col cols="12" sm="12" md="12">
+                <v-text-field
+                  label="Салон"
+                  placeholder="Placeholder"
+                  solo
+                  rounded
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="12">
+                <v-text-field
+                  label="Ваше Імя"
+                  placeholder="Placeholder"
+                  solo
+                  rounded
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="12">
+                <v-text-field
+                  label="Ваш номер"
+                  placeholder="Placeholder"
+                  solo
+                  rounded
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </form>
         </section>
         <p>
           «Ніколи не забувайте про манікюр.Руки — перше, що кидається в очі
           після вашого лиця»
         </p>
-        \
         <div class="text-xs-right">
           <em><small>&mdash; Julia Restoin Roitfeld</small></em>
         </div>
@@ -217,6 +247,7 @@ $black: rgb(0, 0, 0);
   flex-wrap: wrap;
   gap: 20px;
   margin-left: 20px;
+  margin-right: 7rem;
 }
 .black__btn {
   position: relative;
@@ -306,16 +337,38 @@ $black: rgb(0, 0, 0);
   height: 530px;
   position: relative;
   background-image: url("../assets/appearance.jpg");
+  background-position-x: -3rem;
   background-size: contain;
   background-repeat: no-repeat;
   margin-bottom: 7rem;
-
+  z-index: 1;
+  .sign-up-online {
+    position: absolute;
+    top: 5rem;
+    right: 2.2rem;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 30%;
+    background: #ee383e;
+    border-radius: 20px;
+    padding: 50px;
+    text-align: center;
+    .sign-up-online__tittle {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+  }
   h1 {
     color: #454546;
     font-weight: 400;
     position: relative;
     cursor: pointer;
+    margin-right: 6rem;
     font-size: 56px;
+    z-index: 10;
   }
 
   h1::after {
@@ -343,11 +396,12 @@ $black: rgb(0, 0, 0);
 .main-section::after {
   content: "";
   bottom: 0;
-  height: 65px;
+  height: 75px;
   width: 100%;
   background: url("../assets/bg_footer.png") bottom center repeat-x;
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   position: absolute;
-  z-index: 1;
+  z-index: 10;
 }
 </style>

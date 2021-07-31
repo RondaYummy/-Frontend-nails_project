@@ -1,6 +1,6 @@
 <template>
   <v-app light>
-    <v-app-bar fixed app height="80px" class="app-bar">
+    <v-app-bar fixed app height="80px" class="app-bar" flat color="white">
       <div class="d38"></div>
       <nuxt-link to="/" class="tittle">
         <v-toolbar-title v-text="title" />
@@ -10,7 +10,6 @@
           <v-chip class="ma-2" color="indigo darken-3" outlined>
             <v-icon left> mdi-fire </v-icon>
             Salon
-            <h5 color="primary">[ * ]</h5>
           </v-chip>
         </nuxt-link>
       </v-row>

@@ -14,45 +14,28 @@
               <nuxt-link class="black__btn" to="#">Записатись</nuxt-link>
             </div>
           </form>
-          <form class="sign-up-online">
-            <h2 class="sign-up-online__tittle">Записатись онлайн</h2>
-            <v-row>
-              <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  label="Салон"
-                  placeholder="Placeholder"
-                  solo
-                  rounded
-                ></v-text-field>
-              </v-col>
 
-              <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  label="Ваше Імя"
-                  placeholder="Placeholder"
-                  solo
-                  rounded
-                ></v-text-field>
-              </v-col>
+          <p class="gaslo_main gaslo_main__first">
+            «{{ title }}» – персоналізований
+            <span class="font-red">комплекс</span> послуг для ідеального образу
+          </p>
 
-              <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  label="Ваш номер"
-                  placeholder="Placeholder"
-                  solo
-                  rounded
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </form>
+          <p class="gaslo_main gaslo_main__two">
+            З нами стильно, легко, вільно
+            <span class="font-red">переконайся сам</span>
+          </p>
+
+          <p class="gaslo_main gaslo_main__three">
+            Велика база
+            <span class="font-red">салонів</span> краси та <span class="font-red">майстрів</span>
+          </p>
+
+          <p class="gaslo_main gaslo_main__for">
+            Не знаєте що подарувати?
+            <span class="font-red">Подаруйте</span> сертифікат на красу разом із
+            «{{ title }}»
+          </p>
         </section>
-        <p>
-          «Ніколи не забувайте про манікюр.Руки — перше, що кидається в очі
-          після вашого лиця»
-        </p>
-        <div class="text-xs-right">
-          <em><small>&mdash; Julia Restoin Roitfeld</small></em>
-        </div>
 
         <hr class="my-3" />
         <about-the-system />
@@ -144,7 +127,9 @@ $black: rgb(0, 0, 0);
   transition-duration: 0.6s;
   transition-timing-function: ease;
 }
-
+.font-red {
+  color: red;
+}
 //default button
 .btn {
   color: black;
@@ -167,7 +152,10 @@ $black: rgb(0, 0, 0);
     text-decoration: none;
   }
 }
-
+.btn2:hover {
+  color: white;
+  background-color: red;
+}
 //button one
 ///////////////////////////////
 .btn-1 {
@@ -206,7 +194,44 @@ $black: rgb(0, 0, 0);
   }
 }
 // end button
+//button 2
+///////////////////////////////
+.btn-2 {
+  background: darken($white, 1.5%);
+  font-weight: 100;
 
+  svg {
+    height: 50px;
+    left: -10;
+    position: absolute;
+    top: -10;
+    width: 180px;
+  }
+
+  rect {
+    fill: none;
+    stroke: $white;
+    stroke-width: 2;
+
+    stroke-dasharray: 422, 0;
+    transition: all 0.35s linear;
+    stroke-linecap: round;
+  }
+}
+
+.btn-2:hover {
+  background: rgba($white, 0);
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  rect {
+    stroke-width: 2;
+    stroke-dasharray: 25, 330;
+    stroke-dashoffset: 48;
+    transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+}
+// end button
 .mainContainer {
   height: 100%;
   display: flex;
@@ -247,7 +272,7 @@ $black: rgb(0, 0, 0);
   flex-wrap: wrap;
   gap: 20px;
   margin-left: 20px;
-  margin-right: 7rem;
+  margin-right: 1.3rem;
 }
 .black__btn {
   position: relative;
@@ -342,31 +367,41 @@ $black: rgb(0, 0, 0);
   background-repeat: no-repeat;
   margin-bottom: 7rem;
   z-index: 1;
-  .sign-up-online {
+  .gaslo_main {
     position: absolute;
+    font-weight: bold;
+    background-image: url("../assets/images/hr.svg");
+    padding-left: 30px;
+    width: 355px;
+    height: 50px;
+  }
+  .gaslo_main__first {
     top: 5rem;
-    right: 2.2rem;
-    z-index: 5;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    width: 30%;
-    background: #ee383e;
-    border-radius: 20px;
-    padding: 50px;
-    text-align: center;
-    .sign-up-online__tittle {
-      color: #fff;
-      margin-bottom: 20px;
-      font-size: 1.3rem;
-    }
+    left: 12rem;
+    z-index: 20;
+  }
+  .gaslo_main__two {
+    top: 12rem;
+    width: 320px;
+    left: 8rem;
+    z-index: 20;
+  }
+  .gaslo_main__three {
+    top: 19rem;
+    left: 8rem;
+    width: 320px;
+    z-index: 20;
+  }
+  .gaslo_main__for {
+    top: 26rem;
+    left: 12rem;
+    z-index: 20;
   }
   h1 {
     color: #454546;
     font-weight: 400;
     position: relative;
     cursor: pointer;
-    margin-right: 6rem;
     font-size: 56px;
     z-index: 10;
   }
